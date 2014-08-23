@@ -34,7 +34,7 @@ class ReceiverController < ApplicationController
 			}
 		else
 			render json: {
-				:message => :"Error",
+				:message => :error,
 				:error => "Unexpected content-type. Expecting JSON."
 			}, status => 400
 		end

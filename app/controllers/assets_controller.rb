@@ -1,4 +1,5 @@
 class AssetsController < ApplicationController
-  def index
-  end
+	skip_before_filter :header_check
+	def index
+	end
 end
