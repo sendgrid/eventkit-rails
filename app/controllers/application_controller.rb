@@ -7,7 +7,8 @@ class ApplicationController < ActionController::Base
 
 	def header_check
 		agent = request.headers["User-Agent"]
-		unless agent == "SendGrid Event API"
+		app = request.headers["X-Requesting-Application"]
+		unless agent == "SendGrid Event API" or app == "EVENTKIT-RAILS"
 			render json: {
 				:message => :error,
 				:error => "POST rejected."
