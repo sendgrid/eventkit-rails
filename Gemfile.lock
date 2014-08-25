@@ -32,6 +32,9 @@ GEM
       ember-source
       execjs
       handlebars-source
+    bourbon (3.2.3)
+      sass (~> 3.2)
+      thor
     builder (3.1.4)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -134,6 +137,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
+  bourbon
   coffee-rails (~> 4.0.0)
   ember-rails (~> 0.14)
   ember-source (~> 1.1)

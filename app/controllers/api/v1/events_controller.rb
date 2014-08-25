@@ -1,5 +1,5 @@
 class Api::V1::EventsController < ApplicationController
-	
+
 	# ==========================================================================
 	# INDEX
 	# ==========================================================================
@@ -8,11 +8,20 @@ class Api::V1::EventsController < ApplicationController
 	# SUMMARY:  Retrieves a list of all the Event records.
 	#
 	def index
-		query = params.except(:action, :controller)
+		query = params.except(:action, :controller, :offset, :limit)
 		if query.keys.count then
 			# LOOK FOR SPECIFIC RECORDS
-			events = Event.where(query)
-			render json: events
+			if (params[:offset] and params[:limit]) then
+				events = Event.where(query).limit(params[:limit]).offset(params[:offset])
+			else
+				events = Event.where(query)
+			end
+			render json: {
+				:events => events,
+				:meta => {
+					:total => Event.where(query).count
+				}
+			}
 		else
 			# RETRIEVE ALL RECORDS
 			events = []
@@ -35,7 +44,7 @@ class Api::V1::EventsController < ApplicationController
 		record = Event.create(properties)
 		render json: record
 	end
-	
+
 	# ==========================================================================
 	# SHOW
 	# ==========================================================================
@@ -54,16 +63,16 @@ class Api::V1::EventsController < ApplicationController
 			}, :status => 404
 		end
 	end
-	
+
 	# ==========================================================================
- 	# UPDATE
- 	# ==========================================================================
- 	# TYPE: 	PUT
- 	# PATH: 	/events/:id
- 	# SUMMARY: 	Updates a specific Event record with given parameters.
- 	#
- 	def update
- 		id = params[:id]
+	# UPDATE
+	# ==========================================================================
+	# TYPE: 	PUT
+	# PATH: 	/events/:id
+	# SUMMARY: 	Updates a specific Event record with given parameters.
+	#
+	def update
+		id = params[:id]
 		if Event.where(id: id).present? then
 			event = Event.find(id)
 			event.update(event_params(params))
@@ -74,15 +83,15 @@ class Api::V1::EventsController < ApplicationController
 				:error => "Event record with ID #{params[:id]} not found."
 			}, :status => 404
 		end
- 	end
+	end
 
- 	# ==========================================================================
- 	# DESTROY
- 	# ==========================================================================
- 	# TYPE: 	DELETE
- 	# PATH: 	/events/:id
- 	# SUMMARY: 	Destroys a specific Event record.
- 	#
+	# ==========================================================================
+	# DESTROY
+	# ==========================================================================
+	# TYPE: 	DELETE
+	# PATH: 	/events/:id
+	# SUMMARY: 	Destroys a specific Event record.
+	#
 	def destroy
 		id = params[:id]
 		if Event.where(id: id).present? then

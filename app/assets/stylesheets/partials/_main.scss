@@ -1,0 +1,19 @@
+main {
+	border-radius: 5px 5px 0px 0px;
+	@include position(absolute, 50px 0px 0px 0px);
+	background: $color-light-gray;
+}
+
+body {
+	background: $color-dark-blue;
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+.container {
+	@include position(absolute, 0px null 0px 50%);
+	$width: 900px;
+	width: $width;
+	margin-left: $width / -2;
+	overflow-y: auto;
+	overflow-x: hidden;
+}

@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
 		unless agent == "SendGrid Event API" or app == "EVENTKIT-RAILS"
 			render json: {
 				:message => :error,
-				:error => "POST rejected."
+				:error => "Request rejected."
 			}, :status => 403
 		end
 	end

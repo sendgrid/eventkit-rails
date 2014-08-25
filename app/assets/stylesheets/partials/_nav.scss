@@ -1,0 +1,19 @@
+nav {
+	@include position(absolute, 0px 0px null 0px);
+	height: 50px;
+	background: $color-dark-blue;
+
+	.container {
+		.brand {
+			$img-width: 290.238px;
+			$img-height: 73.646px;
+			$target-height: 34px;
+			$target-width: $target-height * ($img-width / $img-height);
+			@include position(absolute, ((50px - $target-height) / 2) null null 0px);
+			height: $target-height;
+			width: $target-width;
+			background: image-url('sendgrid-logo.svg');
+			background-size: $target-width $target-height;
+		}
+	}
+}
