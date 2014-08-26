@@ -33,12 +33,17 @@ EventKit.Event = DS.Model.extend({
 		args = JSON.parse(str)
 		list = []
 
-		for key, value of args
-			list.push {
-				key: key
-				value: value
-			}
+		if args
+			for key, value of args
+				list.push {
+					key: key
+					value: value
+				}
 
 		list
 	).property('additional_arguments')
+
+	categoryList: (->
+		JSON.parse(@get('category'))
+	).property('category')
 })
