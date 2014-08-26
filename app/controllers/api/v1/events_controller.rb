@@ -8,11 +8,15 @@ class Api::V1::EventsController < ApplicationController
 	# SUMMARY:  Retrieves a list of all the Event records.
 	#
 	def index
-		query = params.except(:action, :controller, :offset, :limit)
+		query = params.except(:action, :controller, :offset, :limit, :descending)
 		if query.keys.count then
 			# LOOK FOR SPECIFIC RECORDS
 			if (params[:offset] and params[:limit]) then
-				events = Event.where(query).limit(params[:limit]).offset(params[:offset])
+				if (params[:descending]) then
+					events = Event.where(query).order('id DESC').limit(params[:limit]).offset(params[:offset])
+				else
+					events = Event.where(query).limit(params[:limit]).offset(params[:offset])
+				end
 			else
 				events = Event.where(query)
 			end

@@ -1,0 +1,4 @@
+.recent-events {
+	width: ($content-width / 2) - 5px;
+	@include position(absolute, 150px null null 0px);
+}

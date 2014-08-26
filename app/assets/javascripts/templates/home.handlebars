@@ -1,6 +1,26 @@
-<h1 class="btn btn-primary">Boom</h1>
-<ul>
-{{#each model}}
-	<li>{{this.event}}</li>
-{{/each}}
-</ul>
+<h1>Dashboard</h1>
+
+<div class="panel panel-info recent-events" style="margin-top: 25px;">
+    <div class="panel-heading">
+        Most Recent Events
+    </div>
+    <div class="list-group" style="overflow-y: auto; height: 275px;">
+        {{#if model.recent.length}}
+            {{#each model.recent}}
+                {{#link-to 'event' this classNames="list-group-item"}}
+                    <h3 style="font-size: 18px; margin: 0px;">
+                        {{event-title event=event}}
+                    </h3>
+                    <p style="font-size: 10px; margin: 0px; color: #AAA;">{{format-date timestamp}}</p>
+                    <p class="truncate" style="font-size: 14px; margin-top: 5px; margin-bottom: 0px;">{{email}}</p>
+                {{/link-to}}
+            {{/each}}
+        {{else}}
+            <span href="#" class="list-group-item">
+                <h3 style="font-size: 18px; margin-top: 1em; margin-bottom: 1em;">
+                    No recent events.
+                </h3>
+            </span>
+        {{/if}}
+    </div>
+</div>
