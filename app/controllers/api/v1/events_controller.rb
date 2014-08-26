@@ -16,7 +16,7 @@ class Api::V1::EventsController < ApplicationController
 		else
 			# RETRIEVE ALL RECORDS
 			events = []
-			events.find_each do |record|
+			Event.find_each do |record|
 				events << record
 			end
 		end
