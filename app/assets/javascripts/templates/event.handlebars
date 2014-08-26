@@ -68,7 +68,13 @@
 
             {{#if url}}
                 <p><b>URL:</b></p>
-                <ul><li>{{url}}</li></ul>
+                <ul>
+                    <li>
+                        <a {{bind-attr href=url}} target="_blank">
+                            {{url}}
+                        </a>
+                    </li>
+                </ul>
             {{/if}}
 
             {{#if ip}}
@@ -115,3 +121,29 @@
         </div>
     </div>
 {{/with}}
+
+
+<div class="panel panel-info related-events" style="margin-top: 25px;">
+    <div class="panel-heading">
+        Related Events
+    </div>
+    <div class="panel-body">
+        Related events are determined by the sg_message_id field of the message.
+    </div>
+    <div class="list-group" style="overflow-y: auto;" id="related-group">
+        {{#if related.length}}
+            {{#each event in related}}
+                {{#link-to 'event' event tagName="span" class="list-group-item"}}
+                    <h3>{{event-title event=event.event}}&nbsp;<small style="display:none;">Currently Selected</small></h3>
+                    <p>{{format-date event.timestamp}}</p>
+                {{/link-to}}
+            {{/each}}
+        {{else}}
+            <span class="list-group-item">
+                <h3 style="font-size: 18px; margin-top: 1em; margin-bottom: 1em;">
+                    No related events found.
+                </h3>
+            </span>
+        {{/if}}
+    </div>
+</div>

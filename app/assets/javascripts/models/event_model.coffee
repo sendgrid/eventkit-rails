@@ -19,6 +19,11 @@ EventKit.Event = DS.Model.extend({
 	event_post_timestamp: DS.attr()
 	raw: DS.attr()
 
+
+
+	# COMPUTED PROPERTIES
+	#=========================================================================#
+
 	hasAdditionalArguments: (->
 		str = @get('additional_arguments')
 		args = JSON.parse(str)
@@ -62,6 +67,5 @@ EventKit.Event = DS.Model.extend({
 					reason = descriptions[type].replace('__EMAIL__', @get('email'));
 		
 		if reason then new Handlebars.SafeString(reason) else reason
-		#reason
 	).property('event')
 })
