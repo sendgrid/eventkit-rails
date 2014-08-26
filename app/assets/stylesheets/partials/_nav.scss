@@ -14,6 +14,7 @@ nav {
 			width: $target-width;
 			background: image-url('sendgrid-logo.svg');
 			background-size: $target-width $target-height;
+			cursor: pointer;
 		}
 	}
 }

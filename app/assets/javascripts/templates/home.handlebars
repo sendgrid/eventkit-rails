@@ -24,3 +24,21 @@
         {{/if}}
     </div>
 </div>
+
+<div class="panel panel-info events-today" style="margin-top: 25px">
+    <div class="panel-heading">
+        Total Events In Past 24 Hours
+    </div>
+    <div class="panel-body" style="overflow-y: auto; height: 275px;">
+        <span style="text-align: center">
+            <h1 style="font-size: 72px; margin-top: 50px; margin-bottom: 0px;">{{model.today.length}}</h1>
+            <h3>
+                {{#if model.isPlural}}
+                    Events
+                {{else}}
+                    Event
+                {{/if}}
+            </h3>
+        </span>
+    </div>
+</div>

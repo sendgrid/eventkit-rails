@@ -1,4 +1,14 @@
-.recent-events {
-	width: ($content-width / 2) - 5px;
-	@include position(absolute, 150px null null 0px);
+.content {
+	$dashboard-panel-padding: 20px;
+	$dashboard-panel-top: 150px;
+
+	.recent-events {
+		width: ($content-width / 2) - ($dashboard-panel-padding / 2);
+		@include position(absolute, $dashboard-panel-top null null 0px);
+	}
+
+	.events-today {
+		width: ($content-width / 2) - ($dashboard-panel-padding / 2);
+		@include position(absolute, $dashboard-panel-top 0px null null);
+	}
 }

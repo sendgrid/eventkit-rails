@@ -8,32 +8,51 @@ class Api::V1::EventsController < ApplicationController
 	# SUMMARY:  Retrieves a list of all the Event records.
 	#
 	def index
-		query = params.except(:action, :controller, :offset, :limit, :descending)
+		query = params.except(:action, :controller, :offset, :limit, :descending, :sortby, :since)
+
 		if query.keys.count then
 			# LOOK FOR SPECIFIC RECORDS
-			if (params[:offset] and params[:limit]) then
-				if (params[:descending]) then
-					events = Event.where(query).order('id DESC').limit(params[:limit]).offset(params[:offset])
-				else
-					events = Event.where(query).limit(params[:limit]).offset(params[:offset])
-				end
-			else
-				events = Event.where(query)
-			end
-			render json: {
-				:events => events,
-				:meta => {
-					:total => Event.where(query).count
-				}
-			}
+			events = Event.where(query)
 		else
 			# RETRIEVE ALL RECORDS
 			events = []
 			events.find_each do |record|
 				events << record
 			end
-			render json: events
 		end
+
+		if params[:since] then
+			events = Event.where("timestamp > ?", params[:since].to_i)
+		end
+
+		descending = false
+
+		if params[:descending] then
+			descending_value = params[:descending].to_i
+			descending = descending_value != 0
+		end
+
+		if params[:sortby] then
+			ordering = descending ? 'DESC' : 'ASC'
+			events = events.order("#{params[:sortby]} #{ordering}")
+		elsif descending then
+			events = events.order("id DESC")
+		end
+
+		if params[:limit] then
+			events = events.limit(params[:limit])
+		end
+
+		if params[:offset] then
+			events = events.offset(params[:offset])
+		end
+
+		render json: {
+			:events => events,
+			:meta => {
+				:total => Event.where(query.except(:since, :sortby)).count
+			}
+		}
 	end
 
 	# ==========================================================================

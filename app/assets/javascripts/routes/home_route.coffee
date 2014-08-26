@@ -2,11 +2,26 @@ EventKit.HomeRoute = Em.Route.extend({
 	model: ()->
 		now = new Date()
 		yesterday = Math.floor(now.getTime() / 1000) - (24 * 60 * 60)
-		Em.Object.create({
+		EventKit.DashboardModel.create({
 			recent: @store.find('event', {
-					limit: 10
-					offset: 0
-					descending: true
-				})
+				limit: 10
+				offset: 0
+				descending: 0
+				sortby: 'timestamp'
+			})
+
+			today: @store.find('event', {
+				since: yesterday
+			})
 		})
+})
+
+EventKit.DashboardModel = Em.Object.extend({
+	recent: null
+
+	today: null
+
+	isPlural: (->
+		!(@get('today.length') == 1)
+	).property('today')
 })
