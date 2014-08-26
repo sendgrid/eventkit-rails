@@ -18,4 +18,27 @@ EventKit.Event = DS.Model.extend({
 	additional_arguments: DS.attr()
 	event_post_timestamp: DS.attr()
 	raw: DS.attr()
+
+	hasAdditionalArguments: (->
+		str = @get('additional_arguments')
+		args = JSON.parse(str)
+		i = 0
+		for key, value of args
+			i++
+		i > 0
+	).property('additional_arguments')
+
+	additionalArgumentList: (->
+		str = @get('additional_arguments')
+		args = JSON.parse(str)
+		list = []
+
+		for key, value of args
+			list.push {
+				key: key
+				value: value
+			}
+
+		list
+	).property('additional_arguments')
 })

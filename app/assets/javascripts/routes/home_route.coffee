@@ -6,7 +6,7 @@ EventKit.HomeRoute = Em.Route.extend({
 			recent: @store.find('event', {
 				limit: 10
 				offset: 0
-				descending: 0
+				descending: 1
 				sortby: 'timestamp'
 			})
 
