@@ -97,7 +97,7 @@
 
             {{#if sg_message_id}}
                 <p><b>SendGrid Message ID:</b></p>
-                <ul><li class="truncate">{{smtpid}}</li></ul>
+                <ul><li class="truncate">{{sg_message_id}}</li></ul>
             {{/if}}
 
             {{#if hasAdditionalArguments}}
@@ -108,7 +108,10 @@
                     {{/each}}
                 </ul>
             {{/if}}
-            <span id="drop-reason"></span>
+
+            {{#if dropExplanation}}
+                {{dropExplanation}}
+            {{/if}}
         </div>
     </div>
 {{/with}}

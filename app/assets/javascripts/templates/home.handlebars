@@ -7,13 +7,13 @@
     </div>
     <div class="list-group" style="overflow-y: auto; height: 275px;">
         {{#if model.recent.length}}
-            {{#each model.recent}}
-                {{#link-to 'event' this classNames="list-group-item"}}
+            {{#each event in model.recent}}
+                {{#link-to 'event' event classNames="list-group-item"}}
                     <h3 style="font-size: 18px; margin: 0px;">
-                        {{event-title event=event}}
+                        {{event-title event=event.event}}
                     </h3>
-                    <p style="font-size: 10px; margin: 0px; color: #AAA;">{{format-date timestamp}}</p>
-                    <p class="truncate" style="font-size: 14px; margin-top: 5px; margin-bottom: 0px;">{{email}}</p>
+                    <p style="font-size: 10px; margin: 0px; color: #AAA;">{{format-date event.timestamp}}</p>
+                    <p class="truncate" style="font-size: 14px; margin-top: 5px; margin-bottom: 0px;">{{event.email}}</p>
                 {{/link-to}}
             {{/each}}
         {{else}}
