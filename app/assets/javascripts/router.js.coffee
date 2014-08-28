@@ -8,3 +8,11 @@ EventKit.Router.map ()->
 	@resource('event', {
 		path: '/event/:id'	
 	})
+
+	@resource('settings')
+
+	@resource('search', {
+        path: "/search/:query/page/:page"
+    })
+
+	@resource('detailedSearch')

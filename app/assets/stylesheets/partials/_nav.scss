@@ -4,17 +4,49 @@ nav {
 	background: $color-dark-blue;
 
 	.content {
+		$img-width: 290.238px;
+		$img-height: 73.646px;
+		$target-height: 34px;
+		$target-width: $target-height * ($img-width / $img-height);
+
 		.brand {
-			$img-width: 290.238px;
-			$img-height: 73.646px;
-			$target-height: 34px;
-			$target-width: $target-height * ($img-width / $img-height);
 			@include position(absolute, ((50px - $target-height) / 2) null null 0px);
 			height: $target-height;
 			width: $target-width;
 			background: image-url('sendgrid-logo.svg');
 			background-size: $target-width $target-height;
 			cursor: pointer;
+		}
+
+		.nav_links {
+		    position: absolute;
+		    left: $target-width + 5;
+		    height: 100%;
+
+		    li {
+		        display: inline;
+		        list-style-type: none;
+		        cursor: pointer;
+		        height: 100%;
+		        padding: 25px;
+
+		        a {
+		            line-height: 1.5em;
+		            color: #EFEFEF;
+		            text-decoration: none;
+		            line-height: 3.5em !important;
+		            font-weight: bold;
+		        }
+		    }
+
+		    li.active {
+		        background: rgba(0,0,0,0.3);
+		    }
+		}
+
+		.search {
+		    position: absolute;
+		    right: 0px;
 		}
 	}
 }

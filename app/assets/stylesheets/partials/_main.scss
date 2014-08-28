@@ -15,8 +15,13 @@ main {
 	}
 }
 
+#content-layer {
+	@include position(absolute, 0px 0px 0px 0px);
+	z-index: 0;
+}
+
 body {
-	background: $color-dark-blue;
+	background: $color-dark-blue !important;
 	font-family: Helvetica, Arial, sans-serif;
 }
 
@@ -32,6 +37,10 @@ body {
 	margin-left: $content-width / -2;
 }
 
+.blurred {
+	@include blur(5px);
+}
+
 .panel-heading {
 	background: $color-dark-blue !important;
 	border-color: $color-dark-blue !important;
@@ -40,4 +49,11 @@ body {
 
 .panel-info {
 	border-color: $color-dark-blue !important;
+}
+
+#loading-glass {
+	@include position(absolute, 0px 0px 0px 0px);
+	z-index: 999;
+	background: rgba(0,0,0,0.5);
+	display: none;
 }
