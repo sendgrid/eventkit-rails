@@ -1,0 +1,75 @@
+{{#if modelLoaded}}
+    {{#with model}}
+        <div class="panel panel-default" style="margin-top: 25px">
+            <div class="panel-body">
+                <h1 style="margin:0px;">Search Results</h1>
+                <p style="margin:0px; color: #888; font-size: 14px;">For "{{query}}"</p>
+                <p>Go to the {{#link-to 'detailedSearch'}}Detailed Search{{/link-to}} to add filters to your search.</p>
+                <p><a href="#" {{action "downloadCSV"}}>Download as CSV</a></p>
+            </div>
+            <div class="list-group">
+                {{#if results.length}}
+                    {{#each results}}
+                        {{#link-to 'event' this classNames="list-group-item"}}
+                            <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; table-layout:fixed;">
+                                <tr>
+                                    <td style="width: 50%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; vertical-align: top;">
+                                        <h3 style="font-size: 18px; margin: 0px;">
+                                            {{event-title event=event}}
+                                        </h3>
+                                        {{#if timestamp}}
+                                            <p style="font-size: 10px; margin: 0px; color: #AAA;">{{format-date timestamp}}</p>
+                                        {{/if}}
+                                        {{#if subject}}
+                                            <i><p class="truncate" style="font-size: 14px; margin-top: 5px; margin-bottom: 0px; font-weight: bold;">{{subject}}</p></i>
+                                        {{/if}}
+                                        {{#if email}}
+                                            <p class="truncate" style="font-size: 14px; margin: 0px;">{{email}}</p>
+                                        {{/if}}
+                                        {{#if url}}
+                                            <p class="truncate" style="font-size: 14px; margin-top: 5px; margin-bottom: 0px;">{{url}}</p>
+                                        {{/if}}
+                                    </td>
+                                    <td style="width: 50%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; vertical-align: top;">
+                                        {{#if category}}
+                                            <p style="margin: 0px; font-weight: bold">Categories:</p>
+                                            <ul>
+                                                {{#each category}}
+                                                    <li>{{this}}</li>
+                                                {{/each}}
+                                            </ul>
+                                        {{/if}}
+                                        {{#if hasAdditionalArguments}}
+                                            <p style="margin: 0px; font-weight: bold;">Additional Arguments</p>
+                                            <ul>
+                                                {{#each additionalArgumentList}}
+                                                    <li><strong>{{key}}:</strong> {{value}}</li>
+                                                {{/each}}
+                                            </ul>
+                                        {{/if}}
+                                    </td>
+                                </tr>
+                            </table>
+                        {{/link-to}}
+                    {{/each}}
+                {{else}}
+                    <div class="list-group-item">
+                        <h3 style="font-size: 18px; margin: 0px;">
+                            No results.
+                        </h3>
+                    </div>
+                {{/if}}
+            </div>
+        </div>
+        {{#if results.length}}
+            <div style="text-align: center; margin: auto;">
+                <ul class="pagination">
+                    {{#each pages}}
+                        <li>{{#link-to 'searchResults' this}}{{display}}{{/link-to}}</li>
+                    {{/each}}
+                </ul>
+            </div>
+        {{/if}}
+        <h1>&nbsp;</h1>
+    {{/with}}
+{{/if}}

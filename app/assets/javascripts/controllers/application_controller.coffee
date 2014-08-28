@@ -11,8 +11,8 @@ EventKit.ApplicationController = Em.Controller.extend({
 	actions: {
 
 		search: ()->
-			@transitionToRoute('search', {
-				query: @get('query')
+			@transitionToRoute('searchResults', {
+				query: encodeURIComponent(@get('query'))
 				page: 1
 			})
 

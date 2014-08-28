@@ -8,17 +8,23 @@ class Api::V1::EventsController < ApplicationController
 	# SUMMARY:  Retrieves a list of all the Event records.
 	#
 	def index
-		query = params.except(:action, :controller, :offset, :limit, :descending, :sortby, :since)
+		query = params.except(:action, :controller, :offset, :limit, :descending, :sortby, :since, :like)
 
-		if query.keys.count then
+		if params[:like] then
+			# WILD CARD SEARCH
+			events = Event.where(["raw LIKE ?", "%#{query[:raw]}%"])
+			count = events.count
+		elsif query.keys.count then
 			# LOOK FOR SPECIFIC RECORDS
 			events = Event.where(query)
+			count = events.count
 		else
 			# RETRIEVE ALL RECORDS
 			events = []
 			Event.find_each do |record|
 				events << record
 			end
+			count = events.count
 		end
 
 		if params[:since] then
@@ -50,7 +56,7 @@ class Api::V1::EventsController < ApplicationController
 		render json: {
 			:events => events,
 			:meta => {
-				:total => Event.where(query.except(:since, :sortby)).count
+				:total => count
 			}
 		}
 	end
