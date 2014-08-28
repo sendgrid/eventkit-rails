@@ -15,11 +15,6 @@ main {
 	}
 }
 
-#content-layer {
-	@include position(absolute, 0px 0px 0px 0px);
-	z-index: 0;
-}
-
 body {
 	background: $color-dark-blue !important;
 	font-family: Helvetica, Arial, sans-serif;
@@ -49,11 +44,4 @@ body {
 
 .panel-info {
 	border-color: $color-dark-blue !important;
-}
-
-#loading-glass {
-	@include position(absolute, 0px 0px 0px 0px);
-	z-index: 999;
-	background: rgba(0,0,0,0.5);
-	display: none;
 }

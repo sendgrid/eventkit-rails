@@ -59,7 +59,6 @@ EventKit.SearchResultsRoute = Em.Route.extend({
 	setupController: (controller, model)->
 		@_super(controller, model)
 		if !model.results
-			self = @
 			@fetch(model.query, model.page).then((data)->
 				controller.set('model', data)
 			)

@@ -1,21 +1,9 @@
 # ==========================================================================
 # Application Controller 
 # ==========================================================================
-# Contains controller actions for the navigation bar.
+# Contains controller actions for the navigation bar. This controller is a
+# subclass of EventKit.WildcardSearchController, which implements the 
+# wild card search actions.
 #
 
-EventKit.ApplicationController = Em.Controller.extend({
-
-	query: ''
-
-	actions: {
-
-		search: ()->
-			@transitionToRoute('searchResults', {
-				query: encodeURIComponent(@get('query'))
-				page: 1
-			})
-
-	}
-
-})
+EventKit.ApplicationController = EventKit.WildcardSearchController.extend()
