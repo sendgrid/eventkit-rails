@@ -20,7 +20,7 @@ EventKit.DetailedSearchResultsRoute = Em.Route.extend({
 			totalPages = ((limit - (total % limit)) + total) / limit
 
 			pagesArray = [{
-				query: query
+				query: encodeURIComponent(q)
 				page: 1
 				display: new Handlebars.SafeString("&laquo;")
 			}]
@@ -34,13 +34,13 @@ EventKit.DetailedSearchResultsRoute = Em.Route.extend({
 
 			for i in [pageStart..pageEnd]
 				pagesArray.push {
-					query: query
+					query: encodeURIComponent(q)
 					page: i
 					display: i
 				}
 
 			pagesArray.push {
-				query: query
+				query: encodeURIComponent(q)
 				page: totalPages
 				display: new Handlebars.SafeString("&raquo;")
 			}
@@ -48,6 +48,8 @@ EventKit.DetailedSearchResultsRoute = Em.Route.extend({
 			{
 				results: results
 				query: q
+				page: page
+				totalPages: totalPages
 				total: total
 				pages: pagesArray
 			}

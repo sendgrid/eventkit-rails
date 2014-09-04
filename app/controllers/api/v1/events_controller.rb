@@ -8,7 +8,7 @@ class Api::V1::EventsController < ApplicationController
 	# SUMMARY:  Retrieves a list of all the Event records.
 	#
 	def index
-		query = params.except(:action, :controller, :offset, :limit, :descending, :sortby, :since, :like)
+		query = params.except(:action, :controller, :offset, :limit, :descending, :sortby, :since, :like, :detailed)
 
 		if params[:like] then
 			if params[:raw] then
@@ -16,12 +16,10 @@ class Api::V1::EventsController < ApplicationController
 				events = Event.where(["raw LIKE ?", "%#{query[:raw]}%"])
 			elsif params[:detailed] then
 				# DETAILED SEARCH
-				details = JSON.parse query[:detailed]
+				details = JSON.parse params[:detailed]
 
 				details.each do |key, values|
 					if values.length > 1 then
-						puts "======= #{key} is #{values}"
-
 						statement_array = []
 						value_array = []
 
