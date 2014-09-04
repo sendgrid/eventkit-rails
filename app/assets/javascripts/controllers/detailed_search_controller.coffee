@@ -53,7 +53,7 @@ EventKit.DetailedSearchController = Em.ArrayController.extend({
 					model[key] = value
 
 			@transitionTo('detailedSearchResults', {
-				query: JSON.stringify(model)
+				query: encodeURIComponent(JSON.stringify(model))
 				page: 1
 			})
 

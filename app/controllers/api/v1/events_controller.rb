@@ -11,8 +11,43 @@ class Api::V1::EventsController < ApplicationController
 		query = params.except(:action, :controller, :offset, :limit, :descending, :sortby, :since, :like)
 
 		if params[:like] then
-			# WILD CARD SEARCH
-			events = Event.where(["raw LIKE ?", "%#{query[:raw]}%"])
+			if params[:raw] then
+				# WILD CARD SEARCH
+				events = Event.where(["raw LIKE ?", "%#{query[:raw]}%"])
+			elsif params[:detailed] then
+				# DETAILED SEARCH
+				details = JSON.parse query[:detailed]
+
+				details.each do |key, values|
+					if values.length > 1 then
+						puts "======= #{key} is #{values}"
+
+						statement_array = []
+						value_array = []
+
+						values.each do |value|
+							statement_array << "#{key} LIKE ?"
+							value_array << "%#{value}%"
+						end
+
+						statement = statement_array.join(" OR ")
+						value_array.insert(0, statement)
+
+						if events then
+							events = events.where(value_array)
+						else 
+							events = Event.where(value_array)
+						end
+					else
+						if events then
+							events = events.where(["#{key} LIKE ?", "%#{values[0]}%"])
+						else
+							events = Event.where(["#{key} LIKE ?", "%#{values[0]}%"])
+						end
+					end
+				end
+			end
+
 			count = events.count
 		elsif query.keys.count then
 			# LOOK FOR SPECIFIC RECORDS

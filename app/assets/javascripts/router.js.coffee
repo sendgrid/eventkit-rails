@@ -36,7 +36,9 @@ EventKit.Router.map ()->
 	# The detailed search page that allows a user to specify search terms
 	# for specific fields.
 	#=========================================================================#
-	@resource('detailedSearch')
+	@resource('detailedSearch', {
+		path: "/search/detailed"
+	})
 
 	# DETAILED SEARCH RESULTS ROUTE
 	# The results of the detailed search.
