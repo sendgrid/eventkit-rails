@@ -37,3 +37,10 @@ EventKit.Router.map ()->
 	# for specific fields.
 	#=========================================================================#
 	@resource('detailedSearch')
+
+	# DETAILED SEARCH RESULTS ROUTE
+	# The results of the detailed search.
+	#=========================================================================#
+	@resource('detailedSearchResults', {
+		path: "/search/detailed/:query/page/:page"
+	})

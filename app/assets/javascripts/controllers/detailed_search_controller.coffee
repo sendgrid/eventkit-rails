@@ -6,13 +6,6 @@ EventKit.DetailedSearchController = Em.ArrayController.extend({
 			@removeObject(sender)
 
 		addFilter: (type)->
-			if $("#match_option").val() == "all" and @findBy('id', type.id)
-				switch type.id
-					when "category", "additional_arguments" then 
-
-					else
-						alert "Since you've selected \"match all\" above, you can only have one " + type.name + " filter in your search."
-			
 			newFilter = {
  				name: type.name
  				id: type.id
@@ -27,59 +20,42 @@ EventKit.DetailedSearchController = Em.ArrayController.extend({
 
 			@addObject(newFilter)
 
-        # submitSearch: ()->
-        #     params = {}
-            
-        #     $("#detailedSearchParams :input").each(()->
-        #         if (this.type === 'button') then return
-        #         if (!params[this.name]) then params[this.name] = []
-        #         params[this.name].push $(this).val()
-        #     );
+		submitSearch: ()->
+			params = {}
+			$("#detailedSearchParams :input").each(()->
+				if (@type == 'button') then return
+				if (!params[@name]) then params[@name] = []
+				params[@name].push $(@).val()
+			)
 
-        #     model = {
-        #         query: "detailed"
-        #         match: "all"
-        #     }
+			model = {}
 
-        #     for (var key in params) {
-        #         if (key === "additional_arguments_value") {
-        #             continue;
-        #         } else if (key === "additional_arguments_key") {
-        #             model.additional_arguments = [];
-        #             params[key].forEach(function(value, index, array) {
-        #                 model.additional_arguments.push('"' + value + '":"' + params.additional_arguments_value[index] + '"');
-        #             });
-        #         } else if (key.match(/newsletter/g)) {
-        #             model.newsletter = [];
-        #             params[key].forEach(function(value, index, array) {
-        #                 model.newsletter.push('"' + key + '":"' + value + '"');
-        #             });
-        #         } else if (key === "dateStart" || key === "dateEnd") {
-        #             var date = new Date(params[key]),
-        #                 milliseconds = date.getTime(),
-        #                 mod = milliseconds % 1000,
-        #                 unix = (milliseconds - mod) / 1000;
-        #             model[key] = unix;
-        #         } else {
-        #             if (params[key].length > 1) {
-        #                 model[key] = params[key];
-        #             } else {
-        #                 model[key] = params[key][0];
-        #             }
-        #         }
-        #     }
+			for key, value of params
+				if key == "additional_arguments_value"
+					continue
+				else if key == "additional_arguments_key"
+					if !model.additional_arguments then model.additional_arguments = []
+					value.forEach((value, index, array)->
+						model.additional_arguments.push '"' + value + '":"' + params.additional_arguments_value[index] + '"'
+					)
+				else if key.match(/newsletter/g)
+					if !model.newsletter then model.newsletter = []
+					value.forEach((value, index, array)->
+						model.newsletter.push '"' + key + '":"' + value + '"'
+					)
+				else if key == "dateStart" || key == "dateEnd"
+					date = new Date(value)
+					milliseconds = date.getTime()
+					mod = milliseconds % 1000
+					unix = (milliseconds - mod) / 1000
+					model[key] = unix
+				else
+					model[key] = value
 
-        #     var self = this,
-        #         page = "1";
-        #     model.resultsPerPage = kResultsPerPage;
-        #     model.offset = page;
-        #     var url = "api/search.php?" + $.param(model);
-
-        #     Ember.$.getJSON(url).then(function(response) {
-        #         response.page = page;
-        #         response.query = JSON.stringify(model);
-        #         self.transitionToRoute('detailedSearchResults', response);
-        #     });
+			@transitionTo('detailedSearchResults', {
+				query: JSON.stringify(model)
+				page: 1
+			})
 
 	}
 	
