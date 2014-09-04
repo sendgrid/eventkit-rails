@@ -47,7 +47,12 @@ EventKit.DetailedSearchResultsRoute = Em.Route.extend({
 
 			{
 				results: results
-				query: q
+				csv: "/api/v1/events.csv?" + jQuery.param({
+					like: true
+					detailed: q
+					descending: 1
+					sortby: 'timestamp'
+				})
 				page: page
 				totalPages: totalPages
 				total: total

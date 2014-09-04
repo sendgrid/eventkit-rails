@@ -1,3 +1,5 @@
+require 'csv'
+
 class Api::V1::EventsController < ApplicationController
 
 	# ==========================================================================
@@ -8,7 +10,7 @@ class Api::V1::EventsController < ApplicationController
 	# SUMMARY:  Retrieves a list of all the Event records.
 	#
 	def index
-		query = params.except(:action, :controller, :offset, :limit, :descending, :sortby, :since, :like, :detailed)
+		query = params.except(:action, :controller, :offset, :limit, :descending, :sortby, :since, :like, :detailed, :format)
 
 		if params[:like] then
 			if params[:raw] then
@@ -33,7 +35,7 @@ class Api::V1::EventsController < ApplicationController
 
 						if events then
 							events = events.where(value_array)
-						else 
+						else
 							events = Event.where(value_array)
 						end
 					else
@@ -86,12 +88,17 @@ class Api::V1::EventsController < ApplicationController
 			events = events.offset(params[:offset])
 		end
 
-		render json: {
-			:events => events,
-			:meta => {
-				:total => count
+		respond_to do |format|
+			format.html {
+				render json: {
+					:events => events,
+					:meta => {
+						:total => count
+					}
+				}
 			}
-		}
+			format.csv { send_data events.to_csv }
+		end
 	end
 
 	# ==========================================================================

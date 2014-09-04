@@ -1,5 +1,17 @@
 class ReceiverController < ApplicationController
 
+	before_filter :header_check
+
+	def header_check
+		agent = request.headers["User-Agent"]
+		unless agent == "SendGrid Event API"
+			render json: {
+				:message => :error,
+				:error => "Request rejected."
+			}, :status => 403
+		end
+	end
+
 	def handle_post
 		if params[:_json] then
 			events = params[:_json]
