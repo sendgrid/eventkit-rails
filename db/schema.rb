@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140822200153) do
+ActiveRecord::Schema.define(version: 20140906160955) do
 
   create_table "events", force: true do |t|
     t.integer  "timestamp",            limit: 8
@@ -33,6 +33,13 @@ ActiveRecord::Schema.define(version: 20140822200153) do
     t.text     "additional_arguments"
     t.integer  "event_post_timestamp", limit: 8
     t.text     "raw"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "settings", force: true do |t|
+    t.string   "name"
+    t.text     "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

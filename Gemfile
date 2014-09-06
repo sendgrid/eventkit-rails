@@ -53,6 +53,6 @@ end
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem "active_model_serializers"
+gem "active_model_serializers", '>= 0.9.0'
 gem "ember-rails", "~>0.14"
 gem "ember-source", "~>1.1"
