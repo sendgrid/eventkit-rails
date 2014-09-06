@@ -1,18 +1,23 @@
 require 'json'
+require 'permissions'
 
 class AssetsController < ApplicationController
-	skip_before_filter :header_check
-
 	before_filter :authenticate
 
 	def authenticate
-		if Setting.where(name: 'http_basic').present? then
-			setting = Setting.where(name: 'http_basic').first
-			creds = JSON.parse(setting.value)
-			if creds then
-				authenticate_or_request_with_http_basic('Administration') do |username, password|
-					username == creds['u'] && password == creds['p']
+		if User.count > 0 then
+			authenticate_or_request_with_http_basic('Authorized users only.') do |u, p|
+				valid = false
+
+				if User.where(username: u).present?
+					User.where(username: u).each do |user|
+						if p == user.password and (user.permissions & Permissions::VIEW == Permissions::VIEW)
+							valid = true
+						end
+					end
 				end
+
+				valid
 			end
 		end
 	end

@@ -1,24 +1,24 @@
-class Api::V1::SettingsController < ApplicationController
+require 'permissions'
 
-
+class Api::V1::UsersController < ApplicationController
 	# ==========================================================================
 	# INDEX
 	# ==========================================================================
 	# TYPE:  	GET
-	# PATH: 	/settings
-	# SUMMARY:  Retrieves a list of all the Setting records.
+	# PATH: 	/users
+	# SUMMARY:  Retrieves a list of all the User records.
 	#
 	def index
 		query = params.except(:action, :controller, :offset, :limit, :descending, :sortby)
 
 		if query.keys.count then
 			# LOOK FOR SPECIFIC RECORDS
-			settings = Setting.where(query)
+			users = User.where(query)
 		else
 			# RETRIEVE ALL RECORDS
-			settings = []
-			Setting.find_each do |record|
-				settings << record
+			users = []
+			User.find_each do |record|
+				users << record
 			end
 		end
 
@@ -30,23 +30,23 @@ class Api::V1::SettingsController < ApplicationController
 
 		if params[:sortby] then
 			ordering = descending ? 'DESC' : 'ASC'
-			settings = settings.order("#{params[:sortby]} #{ordering}")
+			users = users.order("#{params[:sortby]} #{ordering}")
 		elsif descending then
-			settings = settings.order("id DESC")
+			users = users.order("id DESC")
 		end
 
 		if params[:limit] then
-			settings = settings.limit(params[:limit])
+			users = users.limit(params[:limit])
 		end
 
 		if params[:offset] then
-			settings = settings.offset(params[:offset])
+			users = users.offset(params[:offset])
 		end
 
 		render json: {
-			:settings => settings,
+			:users => users,
 			:meta => {
-				:total => Setting.where(query).count
+				:total => User.where(query).count
 			}
 		}
 	end
@@ -55,12 +55,15 @@ class Api::V1::SettingsController < ApplicationController
 	# CREATE
 	# ==========================================================================
 	# TYPE: 	POST
-	# PATH: 	/settings
-	# SUMMARY: 	Creates a new Setting record with the given parameters.
+	# PATH: 	/users
+	# SUMMARY: 	Creates a new User record with the given parameters.
 	#
 	def create
-		properties = setting_params(params)
-		record = Setting.create(properties)
+		properties = user_params(params)
+		if User.count == 0
+			properties['permissions'] = Permissions::VIEW | Permissions::EDIT | Permissions::DOWNLOAD | Permissions::POST
+		end
+		record = User.create(properties)
 		render json: record
 	end
 	
@@ -68,17 +71,17 @@ class Api::V1::SettingsController < ApplicationController
 	# SHOW
 	# ==========================================================================
 	# TYPE: 	GET
-	# PATH: 	/settings/:id
-	# SUMMARY: 	Retrieves a specific Setting record.
+	# PATH: 	/users/:id
+	# SUMMARY: 	Retrieves a specific User record.
 	#
 	def show
-		if Setting.where(id: params[:id]).present? then
-			setting = Setting.find(params[:id])
-			render json: setting
+		if User.where(id: params[:id]).present? then
+			user = User.find(params[:id])
+			render json: user
 		else
 			render json: {
 				:message => :error,
-				:error => "Setting record with ID #{params[:id]} not found."
+				:error => "User record with ID #{params[:id]} not found."
 			}, :status => 404
 		end
 	end
@@ -87,19 +90,19 @@ class Api::V1::SettingsController < ApplicationController
  	# UPDATE
  	# ==========================================================================
  	# TYPE: 	PUT
- 	# PATH: 	/settings/:id
- 	# SUMMARY: 	Updates a specific Setting record with given parameters.
+ 	# PATH: 	/users/:id
+ 	# SUMMARY: 	Updates a specific User record with given parameters.
  	#
  	def update
  		id = params[:id]
-		if Setting.where(id: id).present? then
-			setting = Setting.find(id)
-			setting.update(setting_params(params))
-			render json: setting
+		if User.where(id: id).present? then
+			user = User.find(id)
+			user.update(user_params(params))
+			render json: user
 		else
 			render json: {
 				:message => :error,
-				:error => "Setting record with ID #{params[:id]} not found."
+				:error => "User record with ID #{params[:id]} not found."
 			}, :status => 404
 		end
  	end
@@ -108,26 +111,25 @@ class Api::V1::SettingsController < ApplicationController
  	# DESTROY
  	# ==========================================================================
  	# TYPE: 	DELETE
- 	# PATH: 	/settings/:id
- 	# SUMMARY: 	Destroys a specific Setting record.
+ 	# PATH: 	/users/:id
+ 	# SUMMARY: 	Destroys a specific User record.
  	#
 	def destroy
 		id = params[:id]
-		if Setting.where(id: id).present? then
-			setting = Setting.find(id)
-			setting.destroy
+		if User.where(id: id).present? then
+			user = User.find(id)
+			user.destroy
 			render json: {}
 		else
 			render json: {
 				:message => :error,
-				:error => "Setting record with ID #{params[:id]} not found."
+				:error => "User record with ID #{params[:id]} not found."
 			}, :status => 404
 		end
 	end
 
 	private
-	def setting_params(params)
-		params.require(:setting).permit(:name, :value)
+	def user_params(params)
+		params.require(:user).permit(:username, :password)
 	end
-
 end

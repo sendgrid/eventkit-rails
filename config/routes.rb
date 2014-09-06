@@ -10,6 +10,9 @@ EventKit::Application.routes.draw do
 
 			# Settings
 			resources :settings
+
+			# Users
+			resources :users
 		end
 	end
 end
