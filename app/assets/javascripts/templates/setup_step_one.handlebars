@@ -1,0 +1,34 @@
+<h4>Step 1 of 3</h4>
+
+<p>
+	Welcome to EventKit!  Before you get started, there's a few things we need to setup.
+</p>
+
+<p>
+	SendGrid's Event Webhook allows for <a href="https://sendgrid.com/docs/API_Reference/Webhooks/event.html#-Setup" target="_blank">Basic Authentication</a>.  Basic Authentication protects your endpoint with a username and password, which would be required for posting new events and also viewing the events.
+</p>
+
+<p>
+	To setup Basic Authentication, choose a username and password:
+</p>
+
+<form {{action 'submitBasicAuth' on='submit'}}>
+
+	{{#with controllers.setup.model}}
+		<label style="margin-top:15px;">Username</label>
+		{{input name="username" class="form-control" value=username}}
+
+		<label style="margin-top:15px;">Password</label>
+		{{input name="password" class="form-control" type="password" value=password}}
+
+		<label style="margin-top:15px;">Retype Password</label>
+		{{input name="confirm-password" class="form-control" type="password" value=confirmPassword}}
+
+		{{#unless passwordMatches}}
+			<p style="color:#800 !important;">Your password entries don't match</p>
+		{{/unless}}
+
+		<input type="submit" {{bind-attr class=":btn :btn-primary meetsCriteria::disabled"}} style="margin-top:15px;" />
+	{{/with}}
+
+</form>

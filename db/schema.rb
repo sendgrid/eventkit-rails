@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20140906160955) do
   create_table "settings", force: true do |t|
     t.string   "name"
     t.text     "value"
+    t.integer  "visible"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

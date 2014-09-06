@@ -46,3 +46,18 @@ EventKit.Router.map ()->
 	@resource('detailedSearchResults', {
 		path: "/search/detailed/:query/page/:page"
 	})
+
+	# SETUP ROUTE
+	# The setup wizard that gets run during the first load.
+	#=========================================================================#
+	@resource('setup', {
+			path: '/setup/step'
+		}, ()->
+			@resource('setupStepOne', {
+				path: '/1'	
+			})
+
+			@resource('setupStepTwo', {
+				path: '/2'
+			})
+	)

@@ -6,7 +6,12 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+
+# Setup Default Settings
+#=========================================================================#
+
 Setting.create({
 	name: "is_setup",
-	value: "0"
+	value: "0",
+	visible: 0
 })
