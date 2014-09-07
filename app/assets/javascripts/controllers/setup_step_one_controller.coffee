@@ -8,8 +8,6 @@ EventKit.SetupStepOneController = Em.Controller.extend({
 				u = @get('controllers.setup.model.username')
 				p = @get('controllers.setup.model.password')
 
-				@get('controllers.setup.model').reset()
-
 				self = @
 				@store.find('user', {
 					username: u

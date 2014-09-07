@@ -60,4 +60,8 @@ EventKit.Router.map ()->
 			@resource('setupStepTwo', {
 				path: '/2'
 			})
+
+			@resource('setupStepThree', {
+				path: '/3'
+			})
 	)
