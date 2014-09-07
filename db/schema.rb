@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 20140906223942) do
     t.integer  "permissions", default: 1
     t.string   "token"
     t.string   "username"
-    t.string   "password"
+    t.binary   "password"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

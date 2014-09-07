@@ -5,7 +5,7 @@ class CreateUsers < ActiveRecord::Migration
 			t.integer :permissions, :default => 1
 			t.string :token
 			t.string :username
-			t.string :password
+			t.binary :password
 			t.timestamps
 		end
 	end
