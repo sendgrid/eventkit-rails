@@ -1,6 +1,10 @@
 require 'permissions'
+require 'bcrypt'
 
 class Api::V1::UsersController < ApplicationController
+
+	include ::BCrypt
+
 	# ==========================================================================
 	# INDEX
 	# ==========================================================================
@@ -60,8 +64,13 @@ class Api::V1::UsersController < ApplicationController
 	#
 	def create
 		properties = user_params(params)
+
+		if properties[:password]
+			properties[:password] = Password.create(properties[:password])
+		end
+
 		if User.count == 0
-			properties['permissions'] = Permissions::VIEW | Permissions::EDIT | Permissions::DOWNLOAD | Permissions::POST
+			properties[:permissions] = Permissions::VIEW | Permissions::EDIT | Permissions::DOWNLOAD | Permissions::POST
 		end
 		record = User.create(properties)
 		render json: record
