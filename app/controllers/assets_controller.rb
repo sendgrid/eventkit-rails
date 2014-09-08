@@ -15,6 +15,8 @@ class AssetsController < ApplicationController
 					User.where(username: u).each do |user|
 						if Password.new(user.password).is_password? p and (user.permissions & Permissions::VIEW == Permissions::VIEW)
 							valid = true
+							user.issue_token
+							@user = user
 						end
 					end
 				end

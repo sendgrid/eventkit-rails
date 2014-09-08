@@ -16,6 +16,7 @@ EventKit.SetupStepOneController = Em.Controller.extend({
 						auth = setting.get('firstObject')
 						auth.set('username', u)
 						auth.set('password', p)
+						localStorage['token'] = auth.get('token')
 						auth.save().then(()->
 							self.transitionToRoute('setupStepTwo')
 						)
@@ -23,7 +24,8 @@ EventKit.SetupStepOneController = Em.Controller.extend({
 						self.store.createRecord('user', {
 							username: u
 							password: p
-						}).save().then(()->
+						}).save().then((user)->
+							localStorage['token'] = user.get('token')
 							self.transitionToRoute('setupStepTwo')
 						)
 				)

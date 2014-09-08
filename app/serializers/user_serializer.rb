@@ -1,4 +1,4 @@
 class UserSerializer < ApplicationSerializer
 	# Included attributes
-	attributes :id, :username, :permissions
+	attributes :id, :username, :permissions, :token
 end

@@ -46,8 +46,9 @@ ActiveRecord::Schema.define(version: 20140906223942) do
   end
 
   create_table "users", force: true do |t|
-    t.integer  "permissions", default: 1
+    t.integer  "permissions",   default: 1
     t.string   "token"
+    t.integer  "token_expires", default: 0
     t.string   "username"
     t.binary   "password"
     t.datetime "created_at"

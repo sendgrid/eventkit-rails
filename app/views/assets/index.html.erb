@@ -5,6 +5,14 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= csrf_meta_tags %>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+  <script>
+  	<% if @user %>
+  		localStorage['token'] = "<%= @user.token %>";
+  	<% else %>
+  		localStorage['token'] = '';
+  	<% end %>
+  </script>
 </head>
 <body>
   <%= javascript_include_tag "application" %>

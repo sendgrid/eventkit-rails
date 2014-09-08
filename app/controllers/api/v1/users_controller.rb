@@ -73,6 +73,8 @@ class Api::V1::UsersController < ApplicationController
 			properties[:permissions] = Permissions::VIEW | Permissions::EDIT | Permissions::DOWNLOAD | Permissions::POST
 		end
 		record = User.create(properties)
+		record.issue_token
+		record.save
 		render json: record
 	end
 	
