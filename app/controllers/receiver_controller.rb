@@ -24,7 +24,6 @@ class ReceiverController < ApplicationController
 							if Password.new(user.password).is_password? p and (user.permissions & Permissions::POST == Permissions::POST)
 								valid = true
 								user.issue_token
-								@user = user
 							end
 						end
 					end

@@ -65,3 +65,10 @@ EventKit.Router.map ()->
 				path: '/3'
 			})
 	)
+
+	# 404 NOT FOUND
+	# Used if the user goes to a route that doesn't exist.
+	#=========================================================================#
+	this.resource('notFound', {
+		path: '*path'
+	});
