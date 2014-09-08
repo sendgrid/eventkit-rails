@@ -5,10 +5,13 @@ class ApplicationController < ActionController::Base
 
 	def user_has_permissions(permission_level_needed, &block)
 		token = request.headers["X-Auth-Token"]
+		if !token and params[:token] then
+			token = params[:token]
+		end
 		permitted = true
 		if User.where(token: token).present? then
 			user = User.where(token: token).first
-			puts "Checking if User #{user.name} has permission level #{permission_level_needed} (#{user.permissions})"
+			puts "Checking if User #{user.username} has permission level #{permission_level_needed} (#{user.permissions})"
 			permitted = (user.permissions & permission_level_needed) == permission_level_needed
 		else
 			permitted = false

@@ -1,4 +1,5 @@
 require 'csv'
+require 'permissions'
 
 class Api::V1::EventsController < ApplicationController
 
@@ -10,7 +11,7 @@ class Api::V1::EventsController < ApplicationController
 	# SUMMARY:  Retrieves a list of all the Event records.
 	#
 	def index
-		query = params.except(:action, :controller, :offset, :limit, :descending, :sortby, :since, :like, :detailed, :format)
+		query = params.except(:action, :controller, :offset, :limit, :descending, :sortby, :since, :like, :detailed, :format, :token)
 
 		if params[:like] then
 			if params[:raw] then
@@ -90,14 +91,20 @@ class Api::V1::EventsController < ApplicationController
 
 		respond_to do |format|
 			format.html {
-				render json: {
-					:events => events,
-					:meta => {
-						:total => count
+				self.user_has_permissions(Permissions::VIEW) do
+					render json: {
+						:events => events,
+						:meta => {
+							:total => count
+						}
 					}
-				}
+				end
 			}
-			format.csv { send_data events.to_csv }
+			format.csv {
+				self.user_has_permissions(Permissions::DOWNLOAD) do
+					send_data events.to_csv
+				end
+			}
 		end
 	end
 
@@ -109,9 +116,11 @@ class Api::V1::EventsController < ApplicationController
 	# SUMMARY: 	Creates a new Event record with the given parameters.
 	#
 	def create
-		properties = event_params(params)
-		record = Event.create(properties)
-		render json: record
+		self.user_has_permissions(Permissions::POST) do
+			properties = event_params(params)
+			record = Event.create(properties)
+			render json: record
+		end
 	end
 
 	# ==========================================================================
@@ -122,14 +131,16 @@ class Api::V1::EventsController < ApplicationController
 	# SUMMARY: 	Retrieves a specific Event record.
 	#
 	def show
-		if Event.where(id: params[:id]).present? then
-			event = Event.find(params[:id])
-			render json: event
-		else
-			render json: {
-				:message => :error,
-				:error => "Event record with ID #{params[:id]} not found."
-			}, :status => 404
+		self.user_has_permissions(Permissions::VIEW) do
+			if Event.where(id: params[:id]).present? then
+				event = Event.find(params[:id])
+				render json: event
+			else
+				render json: {
+					:message => :error,
+					:error => "Event record with ID #{params[:id]} not found."
+				}, :status => 404
+			end
 		end
 	end
 
@@ -141,16 +152,18 @@ class Api::V1::EventsController < ApplicationController
 	# SUMMARY: 	Updates a specific Event record with given parameters.
 	#
 	def update
-		id = params[:id]
-		if Event.where(id: id).present? then
-			event = Event.find(id)
-			event.update(event_params(params))
-			render json: event
-		else
-			render json: {
-				:message => :error,
-				:error => "Event record with ID #{params[:id]} not found."
-			}, :status => 404
+		self.user_has_permissions(Permissions::EDIT) do
+			id = params[:id]
+			if Event.where(id: id).present? then
+				event = Event.find(id)
+				event.update(event_params(params))
+				render json: event
+			else
+				render json: {
+					:message => :error,
+					:error => "Event record with ID #{params[:id]} not found."
+				}, :status => 404
+			end
 		end
 	end
 
@@ -162,16 +175,18 @@ class Api::V1::EventsController < ApplicationController
 	# SUMMARY: 	Destroys a specific Event record.
 	#
 	def destroy
-		id = params[:id]
-		if Event.where(id: id).present? then
-			event = Event.find(id)
-			event.destroy
-			render json: {}
-		else
-			render json: {
-				:message => :error,
-				:error => "Event record with ID #{params[:id]} not found."
-			}, :status => 404
+		self.user_has_permissions(Permissions::EDIT) do
+			id = params[:id]
+			if Event.where(id: id).present? then
+				event = Event.find(id)
+				event.destroy
+				render json: {}
+			else
+				render json: {
+					:message => :error,
+					:error => "Event record with ID #{params[:id]} not found."
+				}, :status => 404
+			end
 		end
 	end
 
