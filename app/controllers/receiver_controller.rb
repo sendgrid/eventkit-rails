@@ -1,6 +1,11 @@
+require 'bcrypt'
+require 'permissions'
+
 class ReceiverController < ApplicationController
 
 	before_filter :header_check
+
+	include BCrypt
 
 	def header_check
 		agent = request.headers["User-Agent"]
@@ -9,6 +14,24 @@ class ReceiverController < ApplicationController
 				:message => :error,
 				:error => "Request rejected."
 			}, :status => 403
+		else
+			if User.count > 0 then
+				authenticate_or_request_with_http_basic('Authorized users only') do |u, p|
+					valid = false
+
+					if User.where(username: u).present?
+						User.where(username: u).each do |user|
+							if Password.new(user.password).is_password? p and (user.permissions & Permissions::POST == Permissions::POST)
+								valid = true
+								user.issue_token
+								@user = user
+							end
+						end
+					end
+
+					valid
+				end
+			end
 		end
 	end
 
@@ -17,7 +40,7 @@ class ReceiverController < ApplicationController
 		background do
 			if Setting.where(name: 'autodelete_time').present?
 				value = Setting.where(name: 'autodelete_time').first.value.to_i
-				if value > 0 
+				if value > 0
 					now = Time.now.to_i
 					threshold = now - (value * 30 * 24 * 60 * 60)
 					Event.where(["timestamp < ?", threshold]).each do |event|
