@@ -13,6 +13,21 @@ class ReceiverController < ApplicationController
 	end
 
 	def handle_post
+		# Delete Old Records
+		background do
+			if Setting.where(name: 'autodelete_time').present?
+				value = Setting.where(name: 'autodelete_time').first.value.to_i
+				if value > 0 
+					now = Time.now.to_i
+					threshold = now - (value * 30 * 24 * 60 * 60)
+					Event.where(["timestamp < ?", threshold]).each do |event|
+						event.destroy
+					end
+				end
+			end
+		end
+
+		# Handle Post
 		if params[:_json] then
 			events = params[:_json]
 			columns = Event.columns_hash
@@ -58,6 +73,13 @@ class ReceiverController < ApplicationController
 
 	def to_string(value)
 		(value.is_a? Array or value.is_a? Hash) ? value.to_json : value
+	end
+
+	def background(&block)
+		Thread.new do
+			yield
+			ActiveRecord::Base.connection.close
+		end
 	end
 
 end
