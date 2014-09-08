@@ -15,3 +15,9 @@ Setting.create({
 	value: "0",
 	visible: 0
 })
+
+Setting.create({
+	name: "autodelete_time",
+	value: "6",
+	visible: 1
+})

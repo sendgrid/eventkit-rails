@@ -63,7 +63,7 @@ class Api::V1::SettingsController < ApplicationController
 		record = Setting.create(properties)
 		render json: record
 	end
-	
+
 	# ==========================================================================
 	# SHOW
 	# ==========================================================================
@@ -82,35 +82,37 @@ class Api::V1::SettingsController < ApplicationController
 			}, :status => 404
 		end
 	end
-	
-	# ==========================================================================
- 	# UPDATE
- 	# ==========================================================================
- 	# TYPE: 	PUT
- 	# PATH: 	/settings/:id
- 	# SUMMARY: 	Updates a specific Setting record with given parameters.
- 	#
- 	def update
- 		id = params[:id]
-		if Setting.where(id: id).present? then
-			setting = Setting.find(id)
-			setting.update(setting_params(params))
-			render json: setting
-		else
-			render json: {
-				:message => :error,
-				:error => "Setting record with ID #{params[:id]} not found."
-			}, :status => 404
-		end
- 	end
 
- 	# ==========================================================================
- 	# DESTROY
- 	# ==========================================================================
- 	# TYPE: 	DELETE
- 	# PATH: 	/settings/:id
- 	# SUMMARY: 	Destroys a specific Setting record.
- 	#
+	# ==========================================================================
+	# UPDATE
+	# ==========================================================================
+	# TYPE: 	PUT
+	# PATH: 	/settings/:id
+	# SUMMARY: 	Updates a specific Setting record with given parameters.
+	#
+	def update
+		self.user_has_permissions(Permissions::EDIT) do
+			id = params[:id]
+			if Setting.where(id: id).present? then
+				setting = Setting.find(id)
+				setting.update(setting_params(params))
+				render json: setting
+			else
+				render json: {
+					:message => :error,
+					:error => "Setting record with ID #{params[:id]} not found."
+				}, :status => 404
+			end
+		end
+	end
+
+	# ==========================================================================
+	# DESTROY
+	# ==========================================================================
+	# TYPE: 	DELETE
+	# PATH: 	/settings/:id
+	# SUMMARY: 	Destroys a specific Setting record.
+	#
 	def destroy
 		id = params[:id]
 		if Setting.where(id: id).present? then
