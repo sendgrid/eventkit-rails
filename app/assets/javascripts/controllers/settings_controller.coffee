@@ -1,5 +1,32 @@
 EventKit.SettingsController = Em.Controller.extend({
 
+	modelDidChange: (->
+		self = @
+
+		# Get the Autodelete Setting
+		@store.find('setting', {
+			name: "autodelete_time"
+		}).then((results)->
+			setting = results.get('firstObject')
+			value = setting.get('value') * 1
+			self.set('autodeleteSelectedValue', self.get('autodelete')[value])
+		)
+
+		# Get the user list
+		@store.find('user').then(
+			(users)->
+				self.set('loadedUsers', true)
+				if users then self.set('users', users)
+				users
+			(response)->
+				self.set('loadedUsers', true)
+		)
+	).observes('model')
+
+
+	# AUTO DELETE SETTING
+	#=========================================================================#
+
 	autodelete: [
 		{
 			label: "Never"
@@ -57,6 +84,17 @@ EventKit.SettingsController = Em.Controller.extend({
 
 	autodeleteSelectedValue: null
 
+	autodeleteSubtext: (->
+		if @get('autodeleteSelectedValue.value') == 0
+			'WARNING! Never deleting events from your database could result in a very large database which might impact performance.  If you\'re using Heroku, there might be a limit on the number of events your database can hold, and might require upgrading your database plan.'
+		else
+			'Please note that if you\'re using Heroku, there may be limitations on the number of events your database can hold. See your Heroku account for more information.'
+	).property('autodeleteSelectedValue')
+
+
+	# USERS
+	#=========================================================================#
+
 	users: null
 	loadedUsers: false
 	editAccessDisabled: (->
@@ -65,38 +103,14 @@ EventKit.SettingsController = Em.Controller.extend({
 		@get('users').forEach((user)->
 			if user.get('canEdit') and user.get('canView') then i++
 		)
-		if i > 1 then false else true
+		if i > 0 then false else true
 	).property('users.@each.permissions')
 
-	autodeleteSubtext: (->
-		if @get('autodeleteSelectedValue.value') == 0
-			'WARNING! Never deleting events from your database could result in a very large database which might impact performance.  If you\'re using Heroku, there might be a limit on the number of events your database can hold, and might require upgrading your database plan.'
-		else
-			'Please note that if you\'re using Heroku, there may be limitations on the number of events your database can hold. See your Heroku account for more information.'
-	).property('autodeleteSelectedValue')
+	showAddUser: false
+	newUser: EventKit.HttpBasicAuth.create()
 
-	modelDidChange: (->
-		self = @
-
-		# Get the Autodelete Setting
-		@store.find('setting', {
-			name: "autodelete_time"
-		}).then((results)->
-			setting = results.get('firstObject')
-			value = setting.get('value') * 1
-			self.set('autodeleteSelectedValue', self.get('autodelete')[value])
-		)
-
-		# Get the user list
-		@store.find('user').then(
-			(users)->
-				self.set('loadedUsers', true)
-				if users then self.set('users', users)
-				users
-			(response)->
-				self.set('loadedUsers', true)
-		)
-	).observes('model')
+	# ACTIONS
+	#=========================================================================#
 
 	actions: {
 		save: ()->
@@ -114,6 +128,44 @@ EventKit.SettingsController = Em.Controller.extend({
 			@get('users').forEach((user)->
 				if user.get('isDirty') then user.save()
 			)
+
+		toggleAddUser: ()->
+			@get('newUser').reset()
+			@set('showAddUser', !@get('showAddUser'))
+
+		addNewUser: ()->
+			if @get('newUser.meetsCriteria')
+				u = @get('newUser.username')
+				p = @get('newUser.password')
+
+				self = @
+				@store.createRecord('user', {
+					username: u
+					password: p
+				}).save().then((user)->
+					self.toggleAddUser()
+					self.set('model', new Date())
+				)
+
+		editUser: (user)->
+			user.get('update').reset()
+			user.set('editing', !user.get('editing'))
+
+		updateUser: (user)->
+			self = @
+			if user.get('update.passwordMatches')
+				if user.get('update.password').length and user.get('update.confirmPassword').length
+					user.set('password', user.get('update.password'))
+
+				user.save().then((user)->
+					self.set('model', new Date())
+					user.get('update').reset()
+					user.set('editing', false)
+					alert "User updates saved!"
+				)
+			else
+				alert "The passwords don't match!"
+
 	}
 
 })

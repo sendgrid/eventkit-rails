@@ -132,7 +132,14 @@ class Api::V1::UsersController < ApplicationController
 			id = params[:id]
 			if User.where(id: id).present? then
 				user = User.find(id)
-				user.update(user_params(params))
+
+				properties = user_params(params)
+
+				if properties[:password]
+					properties[:password] = Password.create(properties[:password])
+				end
+
+				user.update(properties)
 				render json: user
 			else
 				render json: {

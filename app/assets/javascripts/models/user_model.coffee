@@ -4,6 +4,10 @@ EventKit.UserModel = DS.Model.extend({
 	permissions: DS.attr()
 	token: DS.attr()
 
+	editing: false
+
+	update: EventKit.HttpBasicAuth.create()
+
 	canView: ((key, value, previousValue) ->
 		perms = @get('permissions')
 		level = Permissions.VIEW

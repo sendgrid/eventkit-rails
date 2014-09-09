@@ -35,20 +35,6 @@ class ReceiverController < ApplicationController
 	end
 
 	def handle_post
-		# Delete Old Records
-		background do
-			if Setting.where(name: 'autodelete_time').present?
-				value = Setting.where(name: 'autodelete_time').first.value.to_i
-				if value > 0
-					now = Time.now.to_i
-					threshold = now - (value * 30 * 24 * 60 * 60)
-					Event.where(["timestamp < ?", threshold]).each do |event|
-						event.destroy
-					end
-				end
-			end
-		end
-
 		# Handle Post
 		if params[:_json] then
 			events = params[:_json]
@@ -90,6 +76,20 @@ class ReceiverController < ApplicationController
 				:message => :error,
 				:error => "Unexpected content-type. Expecting JSON."
 			}, status => 400
+		end
+
+		# Delete Old Records
+		background do
+			if Setting.where(name: 'autodelete_time').present?
+				value = Setting.where(name: 'autodelete_time').first.value.to_i
+				if value > 0
+					now = Time.now.to_i
+					threshold = now - (value * 30 * 24 * 60 * 60)
+					Event.where(["timestamp < ?", threshold]).each do |event|
+						event.destroy
+					end
+				end
+			end
 		end
 	end
 
