@@ -49,7 +49,7 @@ class Api::V1::UsersController < ApplicationController
 			end
 
 			render json: {
-				:users => users,
+				:users => users.as_json(except: [:password, :token_expires]),
 				:meta => {
 					:total => User.where(query).count
 				}
@@ -168,6 +168,6 @@ class Api::V1::UsersController < ApplicationController
 
 	private
 	def user_params(params)
-		params.require(:user).permit(:username, :password)
+		params.require(:user).permit(:username, :password, :permissions)
 	end
 end

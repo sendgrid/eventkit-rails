@@ -57,6 +57,9 @@ EventKit.SettingsController = Em.Controller.extend({
 
 	autodeleteSelectedValue: null
 
+	users: null
+	loadedUsers: false
+
 	autodeleteSubtext: (->
 		if @get('autodeleteSelectedValue.value') == 0
 			'WARNING! Never deleting events from your database could result in a very large database which might impact performance.  If you\'re using Heroku, there might be a limit on the number of events your database can hold, and might require upgrading your database plan.'
@@ -66,12 +69,24 @@ EventKit.SettingsController = Em.Controller.extend({
 
 	modelDidChange: (->
 		self = @
+
+		# Get the Autodelete Setting
 		@store.find('setting', {
 			name: "autodelete_time"
 		}).then((results)->
 			setting = results.get('firstObject')
 			value = setting.get('value') * 1
 			self.set('autodeleteSelectedValue', self.get('autodelete')[value])
+		)
+
+		# Get the user list
+		@store.find('user').then(
+			(users)->
+				self.set('loadedUsers', true)
+				if users then self.set('users', users)
+				users
+			(response)->
+				self.set('loadedUsers', true)
 		)
 	).observes('model')
 
@@ -86,6 +101,10 @@ EventKit.SettingsController = Em.Controller.extend({
 				setting.save().then(()->
 					alert 'Your changes have been saved!'
 				)
+			)
+
+			@get('users').forEach((user)->
+				if user.get('isDirty') then user.save()
 			)
 	}
 
