@@ -89,7 +89,7 @@
 										<label>Confirm New Password <small>(Leave blank to keep the same)</small></label>
 										{{input class="form-control" type="password" value=user.update.confirmPassword}}
 										<p style="margin-top:10px">
-											<button class="btn btn-danger" {{action 'deleteUser'}}>Delete User</button>
+											<button class="btn btn-danger" {{action 'deleteUser' user}}>Delete User</button>
 											<input type="submit" class="btn btn-primary" value="Update" />
 										</p>
 									</form>

@@ -143,7 +143,7 @@ EventKit.SettingsController = Em.Controller.extend({
 					username: u
 					password: p
 				}).save().then((user)->
-					self.toggleAddUser()
+					self.set('showAddUser', false)
 					self.set('model', new Date())
 				)
 
@@ -165,6 +165,13 @@ EventKit.SettingsController = Em.Controller.extend({
 				)
 			else
 				alert "The passwords don't match!"
+
+		deleteUser: (user)->
+			if confirm "Are you sure you want to delete the user \"" + user.get('username') + "\"?"
+				self = @
+				user.destroyRecord().then(()->
+					self.set('model', new Date())
+				)
 
 	}
 
