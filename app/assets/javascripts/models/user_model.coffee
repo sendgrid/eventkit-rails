@@ -8,6 +8,10 @@ EventKit.UserModel = DS.Model.extend({
 
 	update: EventKit.HttpBasicAuth.create()
 
+	canDelete: (->
+		if localStorage['token'] == @get('token') then false else true
+	).property('token')
+
 	canView: ((key, value, previousValue) ->
 		perms = @get('permissions')
 		level = Permissions.VIEW

@@ -18,12 +18,13 @@
 <button {{action 'save'}} {{bind-attr class=":btn :btn-primary editAccessDisabled:disabled"}}>Save Changes</button>
 
 <h3>Users</h3>
-<p>
-	Pro Tip! You can create a new user that only has "POST" access, which you can then use in your <a href="https://sendgrid.com/app/appSettings/type/eventnotify/id/15" target="_blank">Event Notification app settings</a>.  Credentials that only have "POST" access will only be able to POST new events to your endpoint, and won't be able to log into the UI.
-</p>
 
 {{#if loadedUsers}}
 	{{#if users}}
+
+		<p>
+			Pro Tip! You can create a new user that only has "POST" access, which you can then use in your <a href="https://sendgrid.com/app/appSettings/type/eventnotify/id/15" target="_blank">Event Notification app settings</a>.  Credentials that only have "POST" access will only be able to POST new events to your endpoint, and won't be able to log into the UI.
+		</p>
 
 		{{#if showAddUser}}
 			<form class="well" {{action 'addNewUser' on='submit'}}>
@@ -89,7 +90,9 @@
 										<label>Confirm New Password <small>(Leave blank to keep the same)</small></label>
 										{{input class="form-control" type="password" value=user.update.confirmPassword}}
 										<p style="margin-top:10px">
-											<button class="btn btn-danger" {{action 'deleteUser' user}}>Delete User</button>
+											{{#if user.canDelete}}
+												<button class="btn btn-danger" {{action 'deleteUser' user}}>Delete User</button>
+											{{/if}}
 											<input type="submit" class="btn btn-primary" value="Update" />
 										</p>
 									</form>
@@ -102,15 +105,15 @@
 			{{#if editAccessDisabled}}
 				<p><strong style="color:#800">NOTE!</strong> You're settings can't be saved. You must have at least one user with "View" and "Edit" access - otherwise you might inadvertently lock yourself out!</p>
 			{{/if}}
+			<button {{action 'save'}} {{bind-attr class=":btn :btn-primary editAccessDisabled:disabled"}}>Save Changes</button>
 		{{else}}
 			<p>You currently have no users setup.</p>
 		{{/if}}
 	{{else}}
-		You don't have permission to view or edit users.
+		<p>You don't have permission to view or edit users.</p>
 	{{/if}}
 {{else}}
 	<p>Loading...</p>
 {{/if}}
 
 
-<button {{action 'save'}} {{bind-attr class=":btn :btn-primary editAccessDisabled:disabled"}}>Save Changes</button>
