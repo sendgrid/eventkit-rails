@@ -59,6 +59,14 @@ EventKit.SettingsController = Em.Controller.extend({
 
 	users: null
 	loadedUsers: false
+	editAccessDisabled: (->
+		if !@get('users') then return true
+		i = 0
+		@get('users').forEach((user)->
+			if user.get('canEdit') and user.get('canView') then i++
+		)
+		if i > 1 then false else true
+	).property('users.@each.permissions')
 
 	autodeleteSubtext: (->
 		if @get('autodeleteSelectedValue.value') == 0
