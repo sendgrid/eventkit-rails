@@ -1,4 +1,10 @@
-EventKit.UserModel = DS.Model.extend({
+# ==========================================================================
+# User Model
+# ==========================================================================
+# The frontend model for the user table.
+#
+
+EventKit.User = DS.Model.extend({
 	username: DS.attr()
 	password: DS.attr()
 	permissions: DS.attr()

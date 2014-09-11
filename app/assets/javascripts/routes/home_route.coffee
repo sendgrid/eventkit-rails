@@ -1,3 +1,9 @@
+# ==========================================================================
+# Home Route
+# ==========================================================================
+# Provides the model for the home dashboard.
+#
+
 EventKit.HomeRoute = Em.Route.extend({
 	model: ()->
 		now = new Date()
@@ -14,14 +20,4 @@ EventKit.HomeRoute = Em.Route.extend({
 				since: yesterday
 			})
 		})
-})
-
-EventKit.DashboardModel = Em.Object.extend({
-	recent: null
-
-	today: null
-
-	isPlural: (->
-		!(@get('today.length') == 1)
-	).property('today')
 })

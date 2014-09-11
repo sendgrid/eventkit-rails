@@ -1,3 +1,9 @@
+# ==========================================================================
+# Settings Controller 
+# ==========================================================================
+# The controller for the settings page.
+#
+
 EventKit.SettingsController = Em.Controller.extend({
 
 	modelDidChange: (->

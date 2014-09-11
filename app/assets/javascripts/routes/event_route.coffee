@@ -1,3 +1,10 @@
+# ==========================================================================
+# Event Route 
+# ==========================================================================
+# Fetches the information about a specific event to return to the 
+# controller.
+#
+
 EventKit.EventRoute = Em.Route.extend({
 	
 	model: (params)->

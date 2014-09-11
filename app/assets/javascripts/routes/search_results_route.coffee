@@ -1,3 +1,10 @@
+# ==========================================================================
+# Search Results Route
+# ==========================================================================
+# Performs the wild card search and returns the results as the results as 
+# the model for the Search Results Controller.
+#
+
 EventKit.SearchResultsRoute = Em.Route.extend({
 
 	fetch: (query, page)->

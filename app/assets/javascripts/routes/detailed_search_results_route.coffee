@@ -1,3 +1,10 @@
+# ==========================================================================
+# Detailed Search Results Route 
+# ==========================================================================
+# The route for the detailed search. The route runs the search and returns
+# the result as the model to the Detailed Search Results Controller.
+#
+
 EventKit.DetailedSearchResultsRoute = Em.Route.extend({
 
 	fetch: (query, page)->

@@ -1,3 +1,9 @@
+# ==========================================================================
+# Event Title Component 
+# ==========================================================================
+# A component that displays an event name with the appropriate color.
+#
+
 EventKit.EventTitleComponent = Em.Component.extend({
 	event: ''
 

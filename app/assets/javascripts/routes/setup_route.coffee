@@ -1,3 +1,10 @@
+# ==========================================================================
+# Setup Route 
+# ==========================================================================
+# When the setup wizard is loaded, it double checks to make sure the app
+# hasn't already been setup. If so, it'll redirect to the home page.
+#
+
 EventKit.SetupRoute = Em.Route.extend({
 
 	model: ()->

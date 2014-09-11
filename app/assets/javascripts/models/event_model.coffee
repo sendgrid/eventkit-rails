@@ -1,3 +1,9 @@
+# ==========================================================================
+# Event Model
+# ==========================================================================
+# The frontend model for the event table.
+# 
+
 EventKit.Event = DS.Model.extend({
 	timestamp: DS.attr()
 	event: DS.attr()

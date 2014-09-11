@@ -1,10 +1,10 @@
 # ==========================================================================
-# Search Results Controller 
+# Detailed Search Results Controller 
 # ==========================================================================
-# The controller for the page that returns wildcard search results.
+# The controller for the detailed search results view.
 #
 
-EventKit.SearchResultsController = Em.Controller.extend({
+EventKit.DetailedSearchResultsController = Em.Controller.extend({
 
 	modelLoaded: false
 

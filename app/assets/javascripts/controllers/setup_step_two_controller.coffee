@@ -1,3 +1,10 @@
+# ==========================================================================
+# Setup Step Three Controller 
+# ==========================================================================
+# The controller for the third and final step of the setup wizard that 
+# shows that the setup is complete.
+#
+
 EventKit.SetupStepTwoController = Em.Controller.extend({
 
 	needs: ['setup']
