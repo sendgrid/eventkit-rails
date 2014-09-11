@@ -58,3 +58,5 @@ gem 'bcrypt', '~> 3.1.7'
 gem "active_model_serializers", '>= 0.9.0'
 gem "ember-rails", "~>0.14"
 gem "ember-source", "~>1.1"
+
+ruby "2.1.1"
