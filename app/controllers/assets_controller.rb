@@ -27,5 +27,6 @@ class AssetsController < ApplicationController
 	end
 
 	def index
+		cookies['APP-VERSION'] = VERSION
 	end
 end

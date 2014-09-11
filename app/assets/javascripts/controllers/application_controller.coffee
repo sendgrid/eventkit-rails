@@ -21,7 +21,15 @@ EventKit.ApplicationController = EventKit.WildcardSearchController.extend({
 			}).save()
 			self.transitionToRoute('setupStepOne')
 
-
+		if localStorage['token'] and localStorage['token'].length
+			@set('user', @store.find("user", {
+				token: localStorage['token']
+			}).then((users)->
+				if users.get('length')
+					self.set('user', users.get('firstObject'))
+			))
 	).observes('model')
+
+	user: null
 
 })

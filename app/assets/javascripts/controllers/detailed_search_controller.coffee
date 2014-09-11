@@ -1,3 +1,10 @@
+# ==========================================================================
+# Detailed Search Controller 
+# ==========================================================================
+# The controller for the detailed search page where you can specify
+# specific fields to search on.
+#
+
 EventKit.DetailedSearchController = Em.ArrayController.extend({
 
 	actions: {
