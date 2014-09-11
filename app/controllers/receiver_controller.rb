@@ -1,3 +1,10 @@
+# ==========================================================================
+# Receiver Controller
+# ==========================================================================
+# This is the controller that handles event POSTs from the SendGrid Event
+# Webhook.
+#
+
 require 'bcrypt'
 require 'permissions'
 

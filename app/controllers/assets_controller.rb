@@ -1,3 +1,10 @@
+# ==========================================================================
+# Assets Controller
+# ==========================================================================
+# This controller loads the frontend website. It also provides HTTP Basic
+# Auth.
+#
+
 require 'json'
 require 'permissions'
 
