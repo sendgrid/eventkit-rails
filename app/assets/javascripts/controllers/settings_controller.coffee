@@ -29,6 +29,13 @@ EventKit.SettingsController = Em.Controller.extend({
 		)
 	).observes('model')
 
+	endpoint: (->
+		protocol = window.location.protocol + "//"
+		hash = window.location.hash
+		url = window.location.href.replace(protocol, "").replace(hash, "")
+		protocol + "[username]:[password]@" + url
+	).property()
+
 
 	# AUTO DELETE SETTING
 	#=========================================================================#

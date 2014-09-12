@@ -103,12 +103,19 @@
 				</tbody>
 			</table>
 			{{#if editAccessDisabled}}
-				<p><strong style="color:#800">NOTE!</strong> You're settings can't be saved. You must have at least one user with "View" and "Edit" access - otherwise you might inadvertently lock yourself out!</p>
+				<div class="well"><p><strong style="color:#800">NOTE!</strong> You're settings can't be saved. You must have at least one user with "View" and "Edit" access - otherwise you might inadvertently lock yourself out!</p></div>
 			{{/if}}
-			<button {{action 'save'}} {{bind-attr class=":btn :btn-primary editAccessDisabled:disabled"}}>Save Changes</button>
 		{{else}}
 			<p>You currently have no users setup.</p>
 		{{/if}}
+
+		<p>If you're creating a set of credentials for SendGrid's Event Webhook to POST with, remember to put those credentials in the URL of your Event notification settings like so:</p>
+		<p align="center" style="font-family:Courier,monospace;">{{endpoint}}</p>
+		<p>
+			Where <span style="font-family:Courier,monospace;">[username]</span> and <span style="font-family:Courier,monospace;">[password]</span> are replaced with the proper credentials.
+		</p>
+		<button {{action 'save'}} {{bind-attr class=":btn :btn-primary editAccessDisabled:disabled"}}>Save Changes</button>
+
 	{{else}}
 		<p>You don't have permission to view or edit users.</p>
 	{{/if}}
