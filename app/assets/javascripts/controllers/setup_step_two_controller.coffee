@@ -18,21 +18,45 @@ EventKit.SetupStepTwoController = Em.Controller.extend({
 		hash = window.location.hash
 		url = window.location.href.replace(protocol, "").replace(hash, "")
 		model = @get('controllers.setup.model')
-		protocol + model.get('username') + ":" + model.get('password') + "@" + url
+		protocol + encodeURIComponent(model.get('username')) + ":" + encodeURIComponent(model.get('password')) + "@" + url
 	).property('controllers.setup.model.username', 'controllers.setup.model.password')
 
 	actions: {
 		continue: ()->
-			@get('controllers.setup.model').reset()
+			u = @get('controllers.setup.model.username')
+			p = @get('controllers.setup.model.password')
+
 			self = @
-			@store.find('setting', {
-				name: "is_setup"
-			}).then((data)->
-				setting = data.get('firstObject')
-				setting.set('value', '1')
-				setting.save().then(()->
-					self.transitionToRoute('setupStepThree')
+
+			goToStepThree = ()->
+				self.get('controllers.setup.model').reset()
+				self.store.find('setting', {
+					name: "is_setup"
+				}).then((data)->
+					setting = data.get('firstObject')
+					setting.set('value', '1')
+					setting.save().then(()->
+						self.transitionToRoute('setupStepThree')
+					)
 				)
+
+			@store.find('user', {
+				username: u
+			}).then((setting)->
+				if setting and setting.get('length')
+					auth = setting.get('firstObject')
+					auth.set('username', u)
+					auth.set('password', p)
+					localStorage['token'] = auth.get('token')
+					auth.save().then(goToStepThree)
+				else
+					self.store.createRecord('user', {
+						username: u
+						password: p
+					}).save().then((user)->
+						localStorage['token'] = user.get('token')
+						goToStepThree()
+					)
 			)
 	}
 
