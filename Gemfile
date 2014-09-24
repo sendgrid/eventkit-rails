@@ -8,6 +8,7 @@ group :production do
 	gem 'rails_12factor'
 end
 
+gem 'unicorn'
 gem 'json'
 gem 'bourbon'
 gem 'rails', '4.0.8'
