@@ -10,4 +10,4 @@ EventKit Rails uses [Ruby on Rails](http://rubyonrails.org) for the backend, inc
 
 You can easily deploy EventKit Rails to your Heroku account with a few clicks using the button below. If you don't currently have a Heroku account, you can [set one up for free](https://www.heroku.com/pricing) on their website.
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/sendgrid/eventkit-rails/tree/master)
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
