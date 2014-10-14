@@ -61,11 +61,11 @@ class ReceiverController < ApplicationController
 					if key == "type" then
 						props["type_id"] = value
 					elsif columns[key] then
-						str = to_string(value)
-						if str.is_a? String then
-							str = str.gsub(/\\\//,"/")
+						#str = to_string(value)
+						if value.is_a? String then
+							value = value.gsub(/\\\//,"/")
 						end
-						props[key] = str
+						props[key] = value
 					else
 						unique_args[key] = to_string(value)
 					end
