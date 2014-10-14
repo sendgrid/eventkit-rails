@@ -21,6 +21,7 @@ EventKit.Event = DS.Model.extend({
 	status: DS.attr()
 	type_id: DS.attr()
 	url: DS.attr()
+	asm_group_id: DS.attr()
 	additional_arguments: DS.attr()
 	event_post_timestamp: DS.attr()
 	raw: DS.attr()

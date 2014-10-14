@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140906223942) do
+ActiveRecord::Schema.define(version: 20141014135702) do
 
   create_table "events", force: true do |t|
     t.integer  "timestamp",            limit: 8
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20140906223942) do
     t.text     "raw"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "asm_group_id",         limit: 2
   end
 
   create_table "settings", force: true do |t|
