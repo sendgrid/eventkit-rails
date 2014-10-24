@@ -59,6 +59,10 @@ EventKit.Event = DS.Model.extend({
 		JSON.parse(@get('category'))
 	).property('category')
 
+	newsletterList: (->
+		JSON.parse(@get('newsletter'))
+	).property('newsletter')
+
 	dropExplanation: (->
 		if @get('event') == 'dropped'
 			descriptions = {

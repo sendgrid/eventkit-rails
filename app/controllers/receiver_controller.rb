@@ -63,6 +63,8 @@ class ReceiverController < ApplicationController
 					elsif columns[key] then
 						if value.is_a? String then
 							value = value.gsub(/\\\//,"/")
+						elsif value.is_a? Array or value.is_a? Hash then
+							value = value.to_json
 						end
 						props[key] = value
 					else
