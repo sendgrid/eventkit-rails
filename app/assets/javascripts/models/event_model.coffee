@@ -56,7 +56,10 @@ EventKit.Event = DS.Model.extend({
 	).property('additional_arguments')
 
 	categoryList: (->
-		JSON.parse(@get('category'))
+		try 
+			JSON.parse(@get('category'))
+		catch error
+			[@get('category')]
 	).property('category')
 
 	newsletterList: (->
