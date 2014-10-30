@@ -2,6 +2,12 @@
 
 These instructions are for those who previously deployed EventKit to a Heroku account (whether manually or using the "Deploy to Heroku" button), and would like to update the application with changes that might have been pushed to this repo.
 
+## Prerequisites 
+
+First, you'll need git installed on your computer.  If you don't have git installed, or are unfamiliar with git, [learn more on their website](http://git-scm.com).
+
+Second, you'll need to have setup an SSH key with your Heroku account. If you haven't done so already, [view instructions on how to do so on Heroku's website](https://devcenter.heroku.com/articles/keys).
+
 ## Step 1 - Clone The Project
 
 First off, clone the project to your computer using git.
@@ -31,7 +37,7 @@ cd /path/to/eventkit-rails
 git remote add heroku git@heroku.com:eventkit-rails-upgrade-demo.git
 ```
 
-## Step 4 - Push Latest Changes To Your Heroku URL
+## Step 4 - Push Updates To Your Heroku URL
 
 Finally, you can push the latest and greatest changes to your Heroku URL by running the following:
 
@@ -43,3 +49,5 @@ git push heroku master
 ```
 
 The latest changes will be uploaded to your Heroku account!
+
+**NOTE:** If you receive a `permission denied` error, you'll probably need to [setup an SSH key for your Heroku account](https://devcenter.heroku.com/articles/keys).
