@@ -155,9 +155,16 @@ EventKit.SettingsController = Em.Controller.extend({
 				@store.createRecord('user', {
 					username: u
 					password: p
-				}).save().then((user)->
-					self.set('showAddUser', false)
-					self.set('model', new Date())
+				}).save().then(
+					(user)->
+						self.set('showAddUser', false)
+						self.set('model', new Date())
+					(error, user)->
+						if error.status == 406
+							alert "Could not save new user because that username already exists!"
+						else 
+							alert "Yikes! Something went wrong, please try again."
+						window.location.reload()
 				)
 
 		editUser: (user)->
