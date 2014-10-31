@@ -17,7 +17,7 @@ EventKit.HttpBasicAuth = Em.Object.extend({
 	).property('password', 'confirmPassword')
 
 	meetsCriteria: (->
-		(@get('passwordMatches') and @get('username').length and @get('password').length and @get('confirmPassword').length)
+		(@get('passwordMatches') and @get('username').replace(///\s///g,"").length and @get('password').length and @get('confirmPassword').length)
 	).property('username', 'passwordMatches')
 
 	reset: ()->
