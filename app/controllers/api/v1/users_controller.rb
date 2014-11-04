@@ -77,24 +77,17 @@ class Api::V1::UsersController < ApplicationController
 		def new_user
 			properties = user_params(params)
 
-			if properties[:username] and User.where(username: properties[:properties])
-				render json: {
-					:error => "Username already exists.",
-					:message => :error
-				}, :status => 406
-			else
-				if properties[:password]
-					properties[:password] = Password.create(properties[:password])
-				end
-
-				if User.count == 0
-					properties[:permissions] = Permissions::VIEW | Permissions::EDIT | Permissions::DOWNLOAD | Permissions::POST
-				end
-				record = User.create(properties)
-				record.issue_token
-				record.save
-				render json: record
+			if properties[:password]
+				properties[:password] = Password.create(properties[:password])
 			end
+
+			if User.count == 0
+				properties[:permissions] = Permissions::VIEW | Permissions::EDIT | Permissions::DOWNLOAD | Permissions::POST
+			end
+			record = User.create(properties)
+			record.issue_token
+			record.save
+			render json: record
 		end
 
 		if User.count == 0
