@@ -6,5 +6,6 @@
 	"keywords": ["sendgrid", "eventkit", "webhook"],
 	"scripts": {
 		"postdeploy": "bundle exec rake db:migrate\nbundle exec rake db:seed"
-	}
+	},
+	"addons": ["heroku-postgresql"]
 }
