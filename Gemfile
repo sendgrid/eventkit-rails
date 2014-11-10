@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 group :development, :test do
 	gem 'sqlite3'
+	gem 'rspec'
 end
 group :production do
 	gem 'pg'

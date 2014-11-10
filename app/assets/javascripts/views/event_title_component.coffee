@@ -17,7 +17,9 @@ EventKit.EventTitleComponent = Em.Component.extend({
 				open: "Open"
 				processed: "Processed"
 				spamreport: "Spam Report"
-				unsubscribe: "Unsubscribe"
+				unsubscribe: "Unsubscribe",
+				group_unsubscribe: "Group Unsubscribe",
+				group_resubscribe: "Group Resubscribe"
 			}
 			events[@get('event')]
 		).property('event')

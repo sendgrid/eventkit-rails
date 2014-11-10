@@ -16,6 +16,7 @@ EventKit.EventController = Em.Controller.extend({
 
 		@store.find('event', {
 			sg_message_id: msgid
+			sortby: "timestamp"
 		})
 	).property('model')
 
