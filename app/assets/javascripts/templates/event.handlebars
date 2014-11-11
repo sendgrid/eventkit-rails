@@ -1,4 +1,5 @@
 {{#with model}}
+<div class="event-details">
     <span class="outer-text">
         <h1>Event Details</h1>
         {{#if event}}
@@ -12,7 +13,7 @@
         <div class="panel-heading">
             Event Information
         </div>
-        <div class="panel-body" id="event-info-body" style="overflow:hidden">
+        <div class="panel-body" id="event-info-body">
             {{#if timestamp}}
                 <p><b>Time:</b></p>
                 <ul><li>{{format-date timestamp}}</li></ul>
@@ -128,27 +129,44 @@
 {{/with}}
 
 
-<div class="panel panel-info related-events" style="margin-top: 25px;">
-    <div class="panel-heading">
-        Related Events
+    <div class="panel panel-info related-events" style="margin-top: 25px;">
+        <div class="panel-heading">
+            Related Events
+        </div>
+        <div class="panel-body">
+            Related events are determined by the sg_message_id field of the message.
+        </div>
+        <div class="list-group" style="overflow-y: auto;" id="related-group">
+            {{#if related.length}}
+                {{#each event in related}}
+                    {{#link-to 'event' event tagName="span" class="list-group-item"}}
+                        <h3>{{event-title event=event.event}}&nbsp;<small style="display:none;">Currently Selected</small></h3>
+                        <p>{{format-date event.timestamp}}</p>
+                    {{/link-to}}
+                {{/each}}
+            {{else}}
+                <span class="list-group-item">
+                    <h3 style="font-size: 18px; margin-top: 1em; margin-bottom: 1em;">
+                        No related events found.
+                    </h3>
+                </span>
+            {{/if}}
+        </div>
     </div>
-    <div class="panel-body">
-        Related events are determined by the sg_message_id field of the message.
-    </div>
-    <div class="list-group" style="overflow-y: auto;" id="related-group">
-        {{#if related.length}}
-            {{#each event in related}}
-                {{#link-to 'event' event tagName="span" class="list-group-item"}}
-                    <h3>{{event-title event=event.event}}&nbsp;<small style="display:none;">Currently Selected</small></h3>
-                    <p>{{format-date event.timestamp}}</p>
-                {{/link-to}}
-            {{/each}}
-        {{else}}
-            <span class="list-group-item">
-                <h3 style="font-size: 18px; margin-top: 1em; margin-bottom: 1em;">
-                    No related events found.
-                </h3>
-            </span>
-        {{/if}}
+
+    <div class="panel panel-info raw-json" style="margin-top: 25px;">
+        <div class="panel-heading">
+            Raw JSON
+        </div>
+        <div class="panel-body">
+            Below is the raw JSON POST sent from SendGrid's Event Notification app.
+        </div>
+        <div class="list-group">
+            <pre>
+                <code>
+                    {{model.raw}}
+                </code>
+            </pre>
+        </div>
     </div>
 </div>

@@ -1,46 +1,75 @@
 .content {
-	$panel-top: 130px;
+	.event-details {
+		$panel-top: 130px;
+		$panel-height: 440px;
 
-	.event-info {
-		width: ($content-width / 2) - ($dashboard-panel-padding / 2);
-		@include position(absolute, $panel-top null null 0px);
-	}
+		height: $panel-top + ($panel-height * 2);
 
-	.related-events {
-		width: ($content-width / 2) - ($dashboard-panel-padding / 2);
-		@include position(absolute, $panel-top 0px null null);
+		.event-info {
+			width: ($content-width / 2) - ($dashboard-panel-padding / 2);
+			height: $panel-height;
+			overflow: hidden;
+			@include position(absolute, $panel-top null null 0px);
 
-		span.list-group-item {
-			cursor: pointer;
-		}
-
-		span.list-group-item:hover {
-			background: #EFEFEF;
-			cursor: pointer;
-		}
-
-		span.active {
-			background: #FFFFFF !important;
-			border-color: #DDDDDD;
-			color: black;
-			cursor: auto !important;
-
-			small {
-				display: block !important;
-				float: right;
+			.panel-body {
+				@include position(absolute, 42px 0px 0px 0px);
+				overflow: auto;
 			}
 		}
 
-		h3 {
-			font-size: 18px;
-			margin: 0px;
+		.raw-json {
+			width: $content-width;
+			margin-bottom: 100px;
+			@include position(absolute, ($panel-top + $dashboard-panel-padding + $panel-height) 0px null null);
+
+			.list-group {
+				padding: $dashboard-panel-padding;
+			}
 		}
 
-		p {
-			font-size: 10px; 
-			margin: 0px; 
-			color: #AAA;
+		.related-events {
+			width: ($content-width / 2) - ($dashboard-panel-padding / 2);
+			height: $panel-height;
+			overflow: hidden;
+			@include position(absolute, $panel-top 0px null null);
+
+			.list-group {
+				@include position(absolute, 110px 0px 0px 0px);
+				overflow-y: auto;
+				border-top: 1px solid #DDDDDD;
+			}
+
+			span.list-group-item {
+				cursor: pointer;
+			}
+
+			span.list-group-item:hover {
+				background: #EFEFEF;
+				cursor: pointer;
+			}
+
+			span.active {
+				background: #FFFFFF !important;
+				border-color: #DDDDDD;
+				color: black;
+				cursor: auto !important;
+
+				small {
+					display: block !important;
+					float: right;
+				}
+			}
+
+			h3 {
+				font-size: 18px;
+				margin: 0px;
+			}
+
+			p {
+				font-size: 10px; 
+				margin: 0px; 
+				color: #AAA;
+			}
 		}
 	}
-
 }
