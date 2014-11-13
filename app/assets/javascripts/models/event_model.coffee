@@ -30,6 +30,9 @@ EventKit.Event = DS.Model.extend({
 
 	# COMPUTED PROPERTIES
 	#=========================================================================#
+	rawCodeBlock: (->
+		return new Handlebars.SafeString("<pre><code>" + @get("raw") + "</code></pre>")
+	).property('raw')
 
 	hasAdditionalArguments: (->
 		str = @get('additional_arguments')
