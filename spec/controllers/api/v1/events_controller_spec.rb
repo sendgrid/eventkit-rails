@@ -10,7 +10,6 @@ RSpec.describe Api::V1::EventsController, :type => :controller do
 	describe 'GET #index' do
 		context "with no token" do
 			it "receives an error" do
-				FactoryGirl.create_list(:event, 10)
 				get :index
 				json = JSON.parse(response.body)
 				expect(json).to include("error")
@@ -64,6 +63,61 @@ RSpec.describe Api::V1::EventsController, :type => :controller do
 				json = JSON.parse(response.body)
 				expect(json).to include("event")
 				expect(json["event"]["event"]).to include("delivered")
+			end
+		end
+	end
+
+	describe 'GET #show' do
+		context "with no token" do
+			it "receives an error" do
+				get :show, {
+					id: 1
+				}
+				json = JSON.parse(response.body)
+				expect(json).to include("error")
+			end
+		end
+
+		context "with a valid token" do
+			it "retrieves the event with the given ID" do
+				FactoryGirl.create_list(:event, 10)
+				get :show, {
+					:token => @user.token,
+					:id => 1
+				}
+				json = JSON.parse(response.body)
+				expect(json).to include("event")
+			end
+		end
+	end
+
+	describe 'PUT #update' do
+		context "with no token" do
+			it "receives an error" do
+				put :update, {
+					id: 1,
+					:event => {
+						:email => "rspec@example.none"
+					}
+				}
+				json = JSON.parse(response.body)
+				expect(json).to include("error")
+			end
+		end
+
+		context "with a valid token" do
+			it "updates an event with the given ID" do
+				FactoryGirl.create_list(:event, 10)
+				put :update, {
+					:token => @user.token,
+					:id => 1,
+					:event => {
+						:email => "rspec@example.none"
+					}
+				}
+				json = JSON.parse(response.body)
+				expect(json).to include("event")
+				expect(json["event"]["email"]).to include("rspec@example.none")
 			end
 		end
 	end
