@@ -114,16 +114,18 @@ class Api::V1::SettingsController < ApplicationController
 	# SUMMARY: 	Destroys a specific Setting record.
 	#
 	def destroy
-		id = params[:id]
-		if Setting.where(id: id).present? then
-			setting = Setting.find(id)
-			setting.destroy
-			render json: {}
-		else
-			render json: {
-				:message => :error,
-				:error => "Setting record with ID #{params[:id]} not found."
-			}, :status => 404
+		self.user_has_permissions(Permissions::EDIT) do
+			id = params[:id]
+			if Setting.where(id: id).present? then
+				setting = Setting.find(id)
+				setting.destroy
+				render json: {}
+			else
+				render json: {
+					:message => :error,
+					:error => "Setting record with ID #{params[:id]} not found."
+				}, :status => 404
+			end
 		end
 	end
 
