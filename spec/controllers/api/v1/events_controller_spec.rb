@@ -28,6 +28,43 @@ RSpec.describe Api::V1::EventsController, :type => :controller do
 					expect(json["meta"]["total"]).to equal(10)
 				end
 			end
+
+			context "with specific parameters given" do
+				it "retrieves a list of events matching the parameters" do
+					FactoryGirl.create_list(:event, 10)
+					get :index, {token: @user.token, ip: "98.765.43.210"}
+					json = JSON.parse(response.body)
+					expect(json).to include("events")
+				end
+			end
+		end
+	end
+
+	describe 'POST #create' do
+		context "with no token" do
+			it "receives an error" do
+				post :create, {
+					:event => {
+						:event => "delivered"
+					}
+				}
+				json = JSON.parse(response.body)
+				expect(json).to include("error")
+			end
+		end
+
+		context "with a valid token" do
+			it "creates a new event" do
+				post :create, {
+					:token => @user.token,
+					:event => {
+						:event => "delivered"
+					}
+				}
+				json = JSON.parse(response.body)
+				expect(json).to include("event")
+				expect(json["event"]["event"]).to include("delivered")
+			end
 		end
 	end
 
