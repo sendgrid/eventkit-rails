@@ -21,6 +21,7 @@ RSpec.describe Api::V1::EventsController, :type => :controller do
 				it "retrieves a list of all events" do
 					FactoryGirl.create_list(:event, 10)
 					get :index, token: @user.token
+					expect(response).to be_success
 					json = JSON.parse(response.body)
 					expect(json).to include("events")
 					expect(json["events"].length).to equal(10)
@@ -32,6 +33,7 @@ RSpec.describe Api::V1::EventsController, :type => :controller do
 				it "retrieves a list of events matching the parameters" do
 					FactoryGirl.create_list(:event, 10)
 					get :index, {token: @user.token, ip: "98.765.43.210"}
+					expect(response).to be_success
 					json = JSON.parse(response.body)
 					expect(json).to include("events")
 				end
@@ -60,6 +62,7 @@ RSpec.describe Api::V1::EventsController, :type => :controller do
 						:event => "delivered"
 					}
 				}
+				expect(response).to be_success
 				json = JSON.parse(response.body)
 				expect(json).to include("event")
 				expect(json["event"]["event"]).to include("delivered")
@@ -85,6 +88,7 @@ RSpec.describe Api::V1::EventsController, :type => :controller do
 					:token => @user.token,
 					:id => 1
 				}
+				expect(response).to be_success
 				json = JSON.parse(response.body)
 				expect(json).to include("event")
 			end
@@ -115,9 +119,39 @@ RSpec.describe Api::V1::EventsController, :type => :controller do
 						:email => "rspec@example.none"
 					}
 				}
+				expect(response).to be_success
 				json = JSON.parse(response.body)
 				expect(json).to include("event")
 				expect(json["event"]["email"]).to include("rspec@example.none")
+			end
+		end
+	end
+
+	describe 'DELETE #destroy' do
+		context "with no token" do
+			it "receives an error" do
+				delete :destroy, {
+					id: 1
+				}
+				json = JSON.parse(response.body)
+				expect(json).to include("error")
+			end
+		end
+
+		context "with a valid token" do
+			it "deletes an event with the given ID" do
+				FactoryGirl.create_list(:event, 10)
+				delete :destroy, {
+					:token => @user.token,
+					:id => 1
+				}
+				expect(response).to be_success
+				
+				get :show, {
+					:token => @user.token,
+					:id => 1
+				}
+				expect(response).to have_http_status(404)
 			end
 		end
 	end
