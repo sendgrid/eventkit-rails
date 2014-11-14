@@ -37,6 +37,7 @@ GEM
       sass (~> 3.2)
       thor
     builder (3.1.4)
+    coderay (1.1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -60,6 +61,11 @@ GEM
       handlebars-source (~> 1.0)
     erubis (2.7.0)
     execjs (2.2.1)
+    factory_girl (4.4.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.4.1)
+      factory_girl (~> 4.4.0)
+      railties (>= 3.0.0)
     handlebars-source (1.3.0)
     hike (1.2.3)
     i18n (0.6.11)
@@ -74,11 +80,19 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    method_source (0.8.2)
     mime-types (1.25.1)
     minitest (4.7.5)
     multi_json (1.10.1)
+    netrc (0.7.8)
     pg (0.17.1)
     polyglot (0.3.5)
+    pry (0.10.1)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    pry-nav (0.2.4)
+      pry (>= 0.9.10, < 0.11.0)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -104,6 +118,9 @@ GEM
     rake (10.3.2)
     rdoc (4.1.2)
       json (~> 1.4)
+    rest-client (1.7.2)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
     rspec (3.0.0)
       rspec-core (~> 3.0.0)
       rspec-expectations (~> 3.0.0)
@@ -115,7 +132,20 @@ GEM
       rspec-support (~> 3.0.0)
     rspec-mocks (3.0.4)
       rspec-support (~> 3.0.0)
+    rspec-rails (3.0.2)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec-core (~> 3.0.0)
+      rspec-expectations (~> 3.0.0)
+      rspec-mocks (~> 3.0.0)
+      rspec-support (~> 3.0.0)
     rspec-support (3.0.4)
+    rspec_api_test (0.0.2)
+      activesupport
+      bundler
+      rest-client
+      rspec (>= 2.0.0)
     sass (3.2.19)
     sass-rails (4.0.3)
       railties (>= 4.0.0, < 5.0)
@@ -125,6 +155,7 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    slop (3.6.0)
     sprockets (2.11.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -162,13 +193,19 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   ember-rails (~> 0.14)
   ember-source (~> 1.1)
+  factory_girl
+  factory_girl_rails
   jbuilder (~> 1.2)
   jquery-rails
   json
   pg
+  pry
+  pry-nav
   rails (= 4.0.8)
   rails_12factor
   rspec
+  rspec-rails
+  rspec_api_test
   sass-rails (~> 4.0.2)
   sdoc
   sqlite3
