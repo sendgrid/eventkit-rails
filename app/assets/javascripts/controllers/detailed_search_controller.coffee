@@ -39,7 +39,7 @@ EventKit.DetailedSearchController = Em.ArrayController.extend({
 				if key == "additional_arguments"
 					value = '"' + key + '":"' + filter.val + '"'
 				else if key.match /newsletter/g
-					value = '"' + key + '":' + filter.val
+					value = '"' + key + '":"' + filter.val + '"'
 				else if key == "event"
 					value = filter.selectedEvent.type
 				else
