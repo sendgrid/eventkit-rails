@@ -7,17 +7,18 @@
                 <div class="form-group filter-row">
                     <label class="col-sm-2 control-label" style="width: 170px; text-align: right; margin-top: 8px;">{{name}}</label>
                     {{#if additional_arguments}}
-                        {{input value=key class="form-control form-argument-field" placeholder="Argument Key" type="text" name=name_key}}
-                        {{input value=val class="form-control form-argument-field" placeholder="Argument Value" type="text" name=name_val}}
+                        {{input value=key class="form-control form-argument-field" placeholder="Argument Key" type="text"}}
+                        {{input value=val class="form-control form-argument-field" placeholder="Argument Value" type="text"}}
                     {{else}}
-                        {{#if dateStart}}
-                            {{input value=val class="form-control form-field init-date-picker" placeholder="Date Start" type="text" name=id}}
+                        {{#if event}}
+                            {{view "Ember.Select" content=events
+                                                  optionLabelPath="content.name"
+                                                  optionValuePath="content.type"
+                                                  class="form-control form-field"
+                                                  selection=selectedEvent
+                            }}
                         {{else}}
-                            {{#if dateEnd}}
-                                {{input value=val class="form-control form-field init-date-picker" placeholder="Date End" type="text" name=id}}
-                            {{else}}
-                                {{input value=val class="form-control form-field" placeholder=name type="text" name=id}}
-                            {{/if}}
+                            {{input value=val class="form-control form-field" placeholder=name type="text" name=id}}
                         {{/if}}
                     {{/if}}
                     <button type="button" class="btn btn-danger" {{action "removeFilter" this}}>Remove Filter</button>                        
@@ -31,7 +32,7 @@
             </button>
             <ul class="dropdown-menu" role="menu" id="add_filter_menu">
                 {{#each allFilters}}
-                    <li><a {{action "addFilter" this}}>{{name}}</a></li>
+                    <li><a href="#" {{action "addFilter" this}}>{{name}}</a></li>
                 {{/each}}
             </ul>
         </div>
