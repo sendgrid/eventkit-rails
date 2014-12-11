@@ -17,6 +17,7 @@ EventKit.WildcardSearchController = Em.Controller.extend({
 				query: encodeURIComponent(@get('query'))
 				page: 1
 			})
+			@set 'query', ''
 
 	}
 

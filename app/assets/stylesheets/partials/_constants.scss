@@ -8,3 +8,8 @@ $dashboard-panel-padding: 20px;
     -ms-filter: blur($amount);
     filter: blur($amount);
 }
+
+@mixin ios-scroll() {
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
+}
