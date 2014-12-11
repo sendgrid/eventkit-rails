@@ -43,7 +43,7 @@ EventKit.DetailedSearchController = Em.ArrayController.extend({
 				else if key == "event"
 					value = filter.selectedEvent.type
 				else
-					value = filter.value
+					value = filter.val
 				
 				if key.match /newsletter/g
 					if !model.newsletter then model.newsletter = []
