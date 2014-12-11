@@ -28,28 +28,7 @@
 		</div>
 	</div><!-- /.navbar-collapse -->
 </nav>
-<!--
-<nav>
-	<div class="content">
-		{{#link-to 'home' tagName="div" class="brand"}}{{/link-to}}
 
-		<ul class="nav_links">
-	        {{#link-to 'settings' tagName='li'}}<a>SETTINGS</a>{{/link-to}}
-	        {{#link-to 'detailedSearch' tagName='li'}}<a>DETAILED SEARCH</a>{{/link-to}}
-	    </ul>
-
-	    <div class="search">
-            <div class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                    {{input type="text" value=query action="search" class="form-control" placeholder="Search"}}
-                </div>
-            </div>
-        </div>
-	</div>
-</nav>
--->
 <div class="container" role="main">
-	<div class="content">
-		{{outlet}}
-	</div>
+	{{outlet}}
 </div>

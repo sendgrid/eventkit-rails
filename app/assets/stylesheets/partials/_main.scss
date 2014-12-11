@@ -1,35 +1,9 @@
 .container {
-	h1, h2, h3, h4, h5, p, label {
-		color: $color-text-gray;
-	    text-shadow: 0px 1px 0px white;
-	}
-
 	h1, h2, h3, h4, h5 {
 	    font-weight: 900;
 	}
 }
 
 body {
-	font-family: Helvetica, Arial, sans-serif;
 	padding-top: 50px;
-}
-
-.panel {
-	h1, p {
-		color: black;
-	}
-}
-
-.blurred {
-	@include blur(5px);
-}
-
-.panel-heading {
-	background: $color-dark-blue !important;
-	border-color: $color-dark-blue !important;
-	color: white !important;
-}
-
-.panel-info {
-	border-color: $color-dark-blue !important;
 }
