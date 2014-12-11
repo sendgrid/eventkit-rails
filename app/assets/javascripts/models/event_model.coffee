@@ -30,6 +30,9 @@ EventKit.Event = DS.Model.extend({
 
 	# COMPUTED PROPERTIES
 	#=========================================================================#
+	rawCodeBlock: (->
+		return new Handlebars.SafeString("<pre><code>" + @get("raw") + "</code></pre>")
+	).property('raw')
 
 	hasAdditionalArguments: (->
 		str = @get('additional_arguments')
@@ -67,18 +70,19 @@ EventKit.Event = DS.Model.extend({
 	).property('newsletter')
 
 	dropExplanation: (->
-		if @get('event') == 'dropped'
-			descriptions = {
-				bounce: "This email was dropped because \"__EMAIL__\" is on your bounce list.  To continue sending to this address, go to <a href=\"http://sendgrid.com/bounces\">http://sendgrid.com/bounces</a> and delete it from the list.",
-				unsubscribe: "This email was dropped because \"__EMAIL__\" is on your unsubscribe list.  To continue sending to this address, go to <a href=\"http://sendgrid.com/unsubscribes\">http://sendgrid.com/unsubscribes</a> and delete it from the list.",
-				invalid: "This email was dropped because \"__EMAIL__\" is an invalid email address.  See your invalid email list at <a href=\"http://sendgrid.com/invalidEmail\">http://sendgrid.com/invalidEmail</a> for more info.",
-				spam: "This email was dropped because \"__EMAIL__\" reported one of your previous messages as spam, and got added to your spam report list.  To continue sending to this address, go to <a href=\"http://sendgrid.com/spamReports\">http://sendgrid.com/spamReports</a> and delete it from the list."
-			}
+		if @get('reason')
+			if @get('event') == 'dropped'
+				descriptions = {
+					bounce: "This email was dropped because \"__EMAIL__\" is on your bounce list.  To continue sending to this address, go to <a href=\"http://sendgrid.com/bounces\">http://sendgrid.com/bounces</a> and delete it from the list.",
+					unsubscribe: "This email was dropped because \"__EMAIL__\" is on your unsubscribe list.  To continue sending to this address, go to <a href=\"http://sendgrid.com/unsubscribes\">http://sendgrid.com/unsubscribes</a> and delete it from the list.",
+					invalid: "This email was dropped because \"__EMAIL__\" is an invalid email address.  See your invalid email list at <a href=\"http://sendgrid.com/invalidEmail\">http://sendgrid.com/invalidEmail</a> for more info.",
+					spam: "This email was dropped because \"__EMAIL__\" reported one of your previous messages as spam, and got added to your spam report list.  To continue sending to this address, go to <a href=\"http://sendgrid.com/spamReports\">http://sendgrid.com/spamReports</a> and delete it from the list."
+				}
 
-			for type, message of descriptions
-				regex = new RegExp(type, "gi");
-				if @get('reason').match(regex)
-					reason = descriptions[type].replace('__EMAIL__', @get('email'));
+				for type, message of descriptions
+					regex = new RegExp(type, "gi");
+					if @get('reason').match(regex)
+						reason = descriptions[type].replace('__EMAIL__', @get('email'));
 		
 		if reason then new Handlebars.SafeString(reason) else reason
 	).property('event')

@@ -60,7 +60,7 @@ EventKit.SearchResultsRoute = Em.Route.extend({
 					raw: q
 					descending: 1
 					sortby: 'timestamp'
-					token: localStorage['token']
+					token: window.token
 				})
 				total: total
 				pages: pagesArray

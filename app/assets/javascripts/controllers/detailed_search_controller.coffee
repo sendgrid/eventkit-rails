@@ -13,14 +13,18 @@ EventKit.DetailedSearchController = Em.ArrayController.extend({
 			@removeObject(sender)
 
 		addFilter: (type)->
+			types = []
+			for hash in window.EventTypes
+				types.push hash
+
 			newFilter = {
  				name: type.name
  				id: type.id
  				time: new Date().getTime()
- 				name_key: type.id + "_key"
- 				name_val: type.id + "_value"
  				key: ""
  				val: ""
+ 				events: types
+ 				selectedEvent: null
  			}
 
 			newFilter[type.id] = "id"
@@ -28,38 +32,27 @@ EventKit.DetailedSearchController = Em.ArrayController.extend({
 			@addObject(newFilter)
 
 		submitSearch: ()->
-			params = {}
-			$("#detailedSearchParams :input").each(()->
-				if (@type == 'button') then return
-				if (!params[@name]) then params[@name] = []
-				params[@name].push $(@).val()
-			)
-
 			model = {}
 
-			for key, value of params
-				if key == "additional_arguments_value"
-					continue
-				else if key == "additional_arguments_key"
-					if !model.additional_arguments then model.additional_arguments = []
-					value.forEach((value, index, array)->
-						model.additional_arguments.push '"' + value + '":"' + params.additional_arguments_value[index] + '"'
-					)
-				else if key.match(/newsletter/g)
-					if !model.newsletter then model.newsletter = []
-					value.forEach((value, index, array)->
-						model.newsletter.push '"' + key + '":"' + value + '"'
-					)
-				else if key == "dateStart" || key == "dateEnd"
-					date = new Date(value)
-					milliseconds = date.getTime()
-					mod = milliseconds % 1000
-					unix = (milliseconds - mod) / 1000
-					model[key] = unix
+			for filter in @get('content')
+				key = filter.id
+				if key == "additional_arguments"
+					value = '"' + key + '":"' + filter.val + '"'
+				else if key.match /newsletter/g
+					value = '"' + key + '":' + filter.val
+				else if key == "event"
+					value = filter.selectedEvent.type
 				else
-					model[key] = value
+					value = filter.value
+				
+				if key.match /newsletter/g
+					if !model.newsletter then model.newsletter = []
+					model.newsletter.push value
+				else
+					if !model[key] then model[key] = []
+					model[key].push value
 
-			@transitionTo('detailedSearchResults', {
+			@transitionToRoute('detailedSearchResults', {
 				query: encodeURIComponent(JSON.stringify(model))
 				page: 1
 			})

@@ -15,7 +15,7 @@ EventKit.User = DS.Model.extend({
 	update: EventKit.HttpBasicAuth.create()
 
 	canDelete: (->
-		if localStorage['token'] == @get('token') then false else true
+		if window.token == @get('token') then false else true
 	).property('token')
 
 	canView: ((key, value, previousValue) ->

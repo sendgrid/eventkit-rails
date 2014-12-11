@@ -3,6 +3,12 @@ source 'https://rubygems.org'
 group :development, :test do
 	gem 'sqlite3'
 	gem 'rspec'
+	gem 'rspec-rails'
+	gem 'factory_girl'
+	gem 'factory_girl_rails'
+	gem 'rspec_api_test'
+	gem 'pry-nav'
+	gem 'pry'
 end
 group :production do
 	gem 'pg'

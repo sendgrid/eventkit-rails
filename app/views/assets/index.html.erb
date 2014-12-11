@@ -9,9 +9,9 @@
 
   <script>
   	<% if @user %>
-  		localStorage['token'] = "<%= @user.token %>";
+  		window.token = "<%= @user.token %>";
   	<% else %>
-  		localStorage['token'] = '';
+  		window.token = '';
   	<% end %>
   </script>
 </head>

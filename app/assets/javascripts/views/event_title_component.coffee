@@ -8,21 +8,13 @@ EventKit.EventTitleComponent = Em.Component.extend({
 	event: ''
 
 	eventDisplayName: (->
-			events = {
-				bounce: "Bounce"
-				click: "Click"
-				deferred: "Deferred"
-				delivered: "Delivered"
-				dropped: "Dropped"
-				open: "Open"
-				processed: "Processed"
-				spamreport: "Spam Report"
-				unsubscribe: "Unsubscribe",
-				group_unsubscribe: "Group Unsubscribe",
-				group_resubscribe: "Group Resubscribe"
-			}
-			events[@get('event')]
-		).property('event')
+		events = {}
+
+		for hash in window.EventTypes
+			events[hash.type] = hash.name
+
+		events[@get('event')]
+	).property('event')
 
 	tagName: 'span'
 

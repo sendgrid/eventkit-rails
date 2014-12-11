@@ -8,7 +8,7 @@ EventKit.ApplicationAdapter = DS.ActiveModelAdapter.extend({
 		hash = hash || {};
 		hash.beforeSend = (xhr)->
 			xhr.setRequestHeader("X-Requesting-Application", "EVENTKIT-RAILS");
-			if localStorage['token']
-				xhr.setRequestHeader('X-Auth-Token', localStorage['token'])
+			if window.token
+				xhr.setRequestHeader('X-Auth-Token', window.token)
 		@_super(url, type, hash);
 })
