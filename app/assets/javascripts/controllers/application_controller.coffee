@@ -21,9 +21,9 @@ EventKit.ApplicationController = EventKit.WildcardSearchController.extend({
 			}).save()
 			self.transitionToRoute('setupStepOne')
 
-		if localStorage['token'] and localStorage['token'].length
+		if window.token and window.token.length
 			@set('user', @store.find("user", {
-				token: localStorage['token']
+				token: window.token
 			}).then((users)->
 				if users.get('length')
 					self.set('user', users.get('firstObject'))

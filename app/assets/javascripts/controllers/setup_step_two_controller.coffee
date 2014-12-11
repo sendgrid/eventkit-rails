@@ -47,14 +47,14 @@ EventKit.SetupStepTwoController = Em.Controller.extend({
 					auth = setting.get('firstObject')
 					auth.set('username', u)
 					auth.set('password', p)
-					localStorage['token'] = auth.get('token')
+					window.token = auth.get('token')
 					auth.save().then(goToStepThree)
 				else
 					self.store.createRecord('user', {
 						username: u
 						password: p
 					}).save().then((user)->
-						localStorage['token'] = user.get('token')
+						window.token = user.get('token')
 						goToStepThree()
 					)
 			)
