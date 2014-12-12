@@ -6,6 +6,11 @@
 
 EventKit.DetailedSearchResultsController = Em.Controller.extend({
 
+	# URL Paramters
+	# s = search filters
+	# p = page number
+	queryParams: ['s','p']
+
 	modelLoaded: false
 
 	modelDidChange: (->

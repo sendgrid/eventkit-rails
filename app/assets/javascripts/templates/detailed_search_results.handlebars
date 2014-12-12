@@ -65,7 +65,7 @@
             <div style="text-align: center; margin: auto;">
                 <ul class="pagination">
                     {{#each pages}}
-                        <li>{{#link-to 'detailedSearchResults' this}}{{display}}{{/link-to}}</li>
+                        <li>{{#link-to 'detailedSearchResults' (query-params p=page)}}{{display}}{{/link-to}}</li>
                     {{/each}}
                 </ul>
             </div>
