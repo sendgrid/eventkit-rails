@@ -22,29 +22,38 @@ class Api::V1::EventsController < ApplicationController
 				details = JSON.parse params[:detailed]
 
 				details.each do |key, values|
-					if values.length > 1 then
-						statement_array = []
-						value_array = []
+					statement_array = []
+					value_array = []
 
-						values.each do |value|
+					values.each do |value|
+						if key == "newsletter_id" or key == "newsletter_user_list_id" or key == "newsletter_send_id"
+							statement_array << "newsletter LIKE ?"
+							value_array << "%\"#{key}\":\"#{value}\"%"
+
+							statement_array << "newsletter LIKE ?"
+							value_array << "%\"#{key}\":#{value}%"
+						elsif key == "additional_arguments"
+							hash = JSON.parse value
+							hash.each do |k, v|
+								statement_array << "additional_arguments LIKE ?"
+								value_array << "%\"#{k}\":\"#{v}\"%"
+
+								statement_array << "additional_arguments LIKE ?"
+								value_array << "%\"#{k}\":#{v}%"
+							end
+						else
 							statement_array << "#{key} LIKE ?"
 							value_array << "%#{value}%"
 						end
+					end
 
-						statement = statement_array.join(" OR ")
-						value_array.insert(0, statement)
+					statement = statement_array.join(" OR ")
+					value_array.insert(0, statement)
 
-						if events then
-							events = events.where(value_array)
-						else
-							events = Event.where(value_array)
-						end
+					if events then
+						events = events.where(value_array)
 					else
-						if events then
-							events = events.where(["#{key} LIKE ?", "%#{values[0]}%"])
-						else
-							events = Event.where(["#{key} LIKE ?", "%#{values[0]}%"])
-						end
+						events = Event.where(value_array)
 					end
 				end
 			end

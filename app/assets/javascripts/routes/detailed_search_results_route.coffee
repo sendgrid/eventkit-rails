@@ -55,7 +55,7 @@ EventKit.DetailedSearchResultsRoute = Em.Route.extend({
 				display: new Handlebars.SafeString("&raquo;")
 			}
 
-			model = {
+			{
 				results: results
 				csv: "/api/v1/events.csv?" + jQuery.param({
 					like: true
@@ -69,9 +69,6 @@ EventKit.DetailedSearchResultsRoute = Em.Route.extend({
 				total: total
 				pages: pagesArray
 			}
-
-			console.log model
-			model
 		)
 
 	model: (params)->
