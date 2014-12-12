@@ -8,9 +8,9 @@
 # page is loaded.
 #
 
-EventKit.SettingsRoute = Em.Route.extend({
+EventKit.SettingsRoute = Em.Route.extend EventKit.ResetScroll, {
 
 	model: ()->
 		new Date()
 
-})
+}

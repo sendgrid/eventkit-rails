@@ -6,11 +6,11 @@
 # search filters.
 #
 
-EventKit.DetailedSearchRoute = Em.Route.extend({
+EventKit.DetailedSearchRoute = Em.Route.extend EventKit.ResetScroll, {
 
 	model: ()->
 		searchFilters
 
-})
+}
 
 searchFilters = []
