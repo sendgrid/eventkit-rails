@@ -13,6 +13,7 @@ EventKit.WildcardSearchController = Em.Controller.extend({
 	actions: {
 
 		search: ()->
+			$(".navbar-collapse").collapse("hide")
 			@transitionToRoute('searchResults', {
 				query: encodeURIComponent(@get('query'))
 				page: 1

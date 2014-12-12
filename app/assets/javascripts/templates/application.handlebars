@@ -17,8 +17,9 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse navbar-ex1-collapse">
 			<ul class="nav navbar-nav">
-				{{#link-to 'settings' tagName='li'}}<a href="#">SETTINGS</a>{{/link-to}}
-				{{#link-to 'detailedSearch' tagName='li'}}<a href="#">DETAILED SEARCH</a>{{/link-to}}
+				{{#link-to 'home' tagName='li'}}<a href="#" data-toggle="collapse" data-target=".navbar-collapse">HOME</a>{{/link-to}}
+				{{#link-to 'settings' tagName='li'}}<a href="#" data-toggle="collapse" data-target=".navbar-collapse">SETTINGS</a>{{/link-to}}
+				{{#link-to 'detailedSearch' tagName='li'}}<a href="#" data-toggle="collapse" data-target=".navbar-collapse">DETAILED SEARCH</a>{{/link-to}}
 			</ul>
 			<form class="navbar-form navbar-right" role="search" {{action 'search' on='submit'}}>
 				<div class="form-group">
