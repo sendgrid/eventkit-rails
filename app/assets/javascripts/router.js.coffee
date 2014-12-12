@@ -44,7 +44,7 @@ EventKit.Router.map ()->
 	# The results of the detailed search.
 	#=========================================================================#
 	@resource('detailedSearchResults', {
-		path: "/search/detailed/:query/page/:page"
+		path: "/search/detailed/results"
 	})
 
 	# SETUP ROUTE

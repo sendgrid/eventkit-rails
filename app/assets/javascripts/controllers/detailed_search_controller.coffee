@@ -36,25 +36,29 @@ EventKit.DetailedSearchController = Em.ArrayController.extend({
 
 			for filter in @get('content')
 				key = filter.id
-				if key == "additional_arguments"
-					value = '"' + key + '":"' + filter.val + '"'
-				else if key.match /newsletter/g
-					value = '"' + key + '":"' + filter.val + '"'
+				value = []
+				if key == "additional_arguments" or key.match /newsletter/g
+					value.push '"' + key + '":"' + filter.val + '"'
+					value.push '"' + key + '":' + filter.val
 				else if key == "event"
-					value = filter.selectedEvent.type
+					value.push filter.selectedEvent.type
 				else
-					value = filter.val
-				
+					value.push filter.val
+				console.log "value is ", value
 				if key.match /newsletter/g
 					if !model.newsletter then model.newsletter = []
-					model.newsletter.push value
+					list = model.newsletter
+					model.newsletter = list.concat value
 				else
 					if !model[key] then model[key] = []
-					model[key].push value
+					list = model[key]
+					model[key] = list.concat value
 
 			@transitionToRoute('detailedSearchResults', {
-				query: encodeURIComponent(JSON.stringify(model))
-				page: 1
+				queryParams: {
+					s: JSON.stringify(model)
+					p: 1
+				}
 			})
 
 	}

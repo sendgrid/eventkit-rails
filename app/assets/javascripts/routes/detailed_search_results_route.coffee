@@ -7,6 +7,12 @@
 
 EventKit.DetailedSearchResultsRoute = Em.Route.extend({
 
+	queryParams: {
+		p: {
+			refreshModel: true
+		}
+	}
+
 	fetch: (query, page)->
 		limit = 10
 		offset = (page - 1) * limit
@@ -27,7 +33,6 @@ EventKit.DetailedSearchResultsRoute = Em.Route.extend({
 			totalPages = ((limit - (total % limit)) + total) / limit
 
 			pagesArray = [{
-				query: encodeURIComponent(q)
 				page: 1
 				display: new Handlebars.SafeString("&laquo;")
 			}]
@@ -41,18 +46,16 @@ EventKit.DetailedSearchResultsRoute = Em.Route.extend({
 
 			for i in [pageStart..pageEnd]
 				pagesArray.push {
-					query: encodeURIComponent(q)
 					page: i
 					display: i
 				}
 
 			pagesArray.push {
-				query: encodeURIComponent(q)
 				page: totalPages
 				display: new Handlebars.SafeString("&raquo;")
 			}
 
-			{
+			model = {
 				results: results
 				csv: "/api/v1/events.csv?" + jQuery.param({
 					like: true
@@ -66,16 +69,13 @@ EventKit.DetailedSearchResultsRoute = Em.Route.extend({
 				total: total
 				pages: pagesArray
 			}
+
+			console.log model
+			model
 		)
 
 	model: (params)->
-		@fetch(params.query, params.page)
+		@fetch(params.s, params.p)
 
-	setupController: (controller, model)->
-		@_super(controller, model)
-		if !model.results
-			@fetch(model.query, model.page).then((data)->
-				controller.set('model', data)
-			)
 
 })
