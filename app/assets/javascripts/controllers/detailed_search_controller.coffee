@@ -37,14 +37,15 @@ EventKit.DetailedSearchController = Em.ArrayController.extend({
 			for filter in @get('content')
 				key = filter.id
 				value = []
-				if key == "additional_arguments" or key.match /newsletter/g
-					value.push '"' + key + '":"' + filter.val + '"'
+				if key == "additional_arguments"
+					value.push '"' + filter.key + '":"' + filter.val + '"'
+				if key.match /newsletter/g
 					value.push '"' + key + '":' + filter.val
 				else if key == "event"
 					value.push filter.selectedEvent.type
 				else
 					value.push filter.val
-				console.log "value is ", value
+
 				if key.match /newsletter/g
 					if !model.newsletter then model.newsletter = []
 					list = model.newsletter
