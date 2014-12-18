@@ -14,7 +14,7 @@
                     {{#each results}}
                         {{#link-to 'event' this classNames="list-group-item"}}
                             <div class="container-fluid">
-                                <div class="col-md-6">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                     <h3 style="font-size: 18px; margin: 0px;">
                                         {{event-title event=event}}
                                     </h3>
@@ -31,7 +31,7 @@
                                         <p class="truncate" style="font-size: 14px; margin-top: 5px; margin-bottom: 0px;">{{url}}</p>
                                     {{/if}}
                                 </div>
-                                <div class="col-md-6 hidden-xs hidden-sm visible-md visible-lg">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hidden-xs visible-sm visible-md visible-lg">
                                     {{#if category}}
                                         <p style="margin: 0px; font-weight: bold">Categories:</p>
                                         <ul>
