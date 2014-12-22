@@ -50,16 +50,23 @@
   <!-- iPhone 6+ Landscape SPLASHSCREEN -->
   <link href="/webapp/splash/startup_2208x1182.png" media="(device-width: 414px) and (device-height: 736px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image">
 
-  <script>
-  	<% if @user %>
-  		window.token = "<%= @user.token %>";
-  	<% else %>
-  		window.token = '';
-  	<% end %>
-  </script>
 </head>
 <body>
   <%= javascript_include_tag "application" %>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+  <script>
+    <% if @user %>
+      window.token = "<%= @user.token %>";
+    <% else %>
+      window.token = '';
+    <% end %>
+
+    $(function() {
+      if (window.navigator.standalone) {
+        $('body').addClass('standalone')
+      }
+    });
+  </script>
 </body>
 </html>

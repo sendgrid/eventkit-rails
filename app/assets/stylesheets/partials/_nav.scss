@@ -3,3 +3,25 @@ nav {
 		padding: 8px;
 	}
 }
+
+.status-bar {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	height: 20px;
+	background: $color-nav-bar;
+	display: none;
+}
+
+body.standalone {
+	padding-top: 70px !important;
+
+	nav {
+		top: 20px !important;
+	}
+
+	.status-bar {
+		display: block !important;
+	}
+}
