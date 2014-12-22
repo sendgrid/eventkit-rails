@@ -12,6 +12,7 @@ nav {
 	height: 20px;
 	background: $color-nav-bar;
 	display: none;
+	z-index: 150;
 }
 
 body.standalone {
