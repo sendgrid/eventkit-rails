@@ -3,7 +3,7 @@
 
 <div class="panel panel-default">
     <div class="panel-body">
-        <h1 style="margin-top: 0px">Search</h1>
+        <h2 style="margin-top: 0px">Search</h2>
         <p>Your query below will check every field in the database (to, from, etc.). You can also specify specific fields by going to the {{#link-to 'detailedSearch'}}Detailed Search{{/link-to}} page.</p>
         {{input type="text" value=query action="search" class="form-control"}}
     </div>
@@ -17,7 +17,7 @@
         </div>
         <div class="panel-body" style="height: 275px;">
             <span style="text-align: center">
-                <h1 style="font-size: 72px; margin-top: 50px; margin-bottom: 0px;">{{model.today.length}}</h1>
+                <h2 style="font-size: 72px; margin-top: 50px; margin-bottom: 0px;">{{model.today.length}}</h2>
                 <h3>
                     {{#if model.isPlural}}
                         Events
