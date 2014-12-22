@@ -33,7 +33,7 @@ EventKit.SettingsController = Em.Controller.extend({
 		protocol = window.location.protocol + "//"
 		hash = window.location.hash
 		url = window.location.href.replace(protocol, "").replace(hash, "")
-		protocol + "[username]:[password]@" + url
+		return new Handlebars.SafeString "<pre><code>" + protocol + "[username]:[password]@" + url + "</code></pre>"
 	).property()
 
 
@@ -110,14 +110,6 @@ EventKit.SettingsController = Em.Controller.extend({
 
 	users: null
 	loadedUsers: false
-	editAccessDisabled: (->
-		if !@get('users') then return true
-		i = 0
-		@get('users').forEach((user)->
-			if user.get('canEdit') and user.get('canView') then i++
-		)
-		if i > 0 then false else true
-	).property('users.@each.permissions')
 
 	showAddUser: false
 	newUser: EventKit.HttpBasicAuth.create()
@@ -136,10 +128,6 @@ EventKit.SettingsController = Em.Controller.extend({
 				setting.save().then(()->
 					alert 'Your changes have been saved!'
 				)
-			)
-
-			@get('users').forEach((user)->
-				if user.get('isDirty') then user.save()
 			)
 
 		toggleAddUser: ()->
@@ -168,30 +156,7 @@ EventKit.SettingsController = Em.Controller.extend({
 				)
 
 		editUser: (user)->
-			user.get('update').reset()
-			user.set('editing', !user.get('editing'))
-
-		updateUser: (user)->
-			self = @
-			if user.get('update.passwordMatches')
-				if user.get('update.password').length and user.get('update.confirmPassword').length
-					user.set('password', user.get('update.password'))
-
-				user.save().then((user)->
-					self.set('model', new Date())
-					user.get('update').reset()
-					user.set('editing', false)
-					alert "User updates saved!"
-				)
-			else
-				alert "The passwords don't match!"
-
-		deleteUser: (user)->
-			if confirm "Are you sure you want to delete the user \"" + user.get('username') + "\"?"
-				self = @
-				user.destroyRecord().then(()->
-					self.set('model', new Date())
-				)
+			@transitionToRoute 'user', user
 
 	}
 

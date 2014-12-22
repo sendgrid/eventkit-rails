@@ -50,10 +50,6 @@
 				<thead>
 					<tr>
 						<th>Username</th>
-						<th style="text-align:center;width:150px;cursor:help;" title="Allows the user to view the EventKit UI website.">View Access</th>
-						<th style="text-align:center;width:150px;cursor:help;" title="Allows the user to download search results to a CSV.">Download Access</th>
-						<th style="text-align:center;width:150px;cursor:help;" title="Allows the user to POST new events to the endpoint.">POST Access</th>
-						<th style="text-align:center;width:150px;cursor:help;" title="Allows the user to edit user settings and create new users.">Edit Access</th>
 						<th style="text-align:center;width:75px;">Settings</th>
 					</tr>
 				</thead>
@@ -62,59 +58,25 @@
 						<tr>
 							<td>{{user.username}}</td>
 							<td style="text-align:center;">
-								{{input type="checkbox" checked=user.canView}}
-							</td>
-							<td style="text-align:center;">
-								{{input type="checkbox" checked=user.canDownload}}
-							</td>
-							<td style="text-align:center;">
-								{{input type="checkbox" checked=user.canPost}}
-							</td>
-							<td style="text-align:center;">
-								{{input type="checkbox" checked=user.canEdit}}
-							</td>
-							<td style="text-align:center;">
-								<span {{bind-attr class=":glyphicon user.editing:glyphicon-chevron-up:glyphicon-chevron-down"}} style="cursor:pointer;" {{action 'editUser' user}}></span>
+								<span class="glyphicon glyphicon-cog" style="cursor:pointer;" {{action 'editUser' user}}></span>
 							</td>
 						</tr>
-
-						{{#if user.editing}}
-							<tr>
-								<td colspan="6">
-									<form class="well" {{action 'updateUser' user on='submit'}}>
-										<h4 style="margin:0px;">Edit User "{{user.username}}"</h4>
-										<label>Edit Username</label>
-										{{input class="form-control" value=user.username}}
-										<label>New Password <small>(Leave blank to keep the same)</small></label>
-										{{input class="form-control" type="password" value=user.update.password}}
-										<label>Confirm New Password <small>(Leave blank to keep the same)</small></label>
-										{{input class="form-control" type="password" value=user.update.confirmPassword}}
-										<p style="margin-top:10px">
-											{{#if user.canDelete}}
-												<button class="btn btn-danger" {{action 'deleteUser' user}}>Delete User</button>
-											{{/if}}
-											<input type="submit" class="btn btn-primary" value="Update" />
-										</p>
-									</form>
-								</td>
-							</tr>
-						{{/if}}
 					{{/each}}
 				</tbody>
 			</table>
-			{{#if editAccessDisabled}}
-				<div class="well"><p><strong style="color:#800">NOTE!</strong> You're settings can't be saved. You must have at least one user with "View" and "Edit" access - otherwise you might inadvertently lock yourself out!</p></div>
-			{{/if}}
 		{{else}}
 			<p>You currently have no users setup.</p>
 		{{/if}}
 
 		<p>If you're creating a set of credentials for SendGrid's Event Webhook to POST with, remember to put those credentials in the URL of your Event notification settings like so:</p>
-		<p align="center" style="font-family:Courier,monospace;">{{endpoint}}</p>
+
+		<span style="text-align:center">
+			{{endpoint}}
+		</span>
+
 		<p>
 			Where <span style="font-family:Courier,monospace;">[username]</span> and <span style="font-family:Courier,monospace;">[password]</span> are replaced with the proper credentials.
 		</p>
-		<button {{action 'save'}} {{bind-attr class=":btn :btn-primary editAccessDisabled:disabled"}}>Save Changes</button>
 
 	{{else}}
 		<p>You don't have permission to view or edit users.</p>

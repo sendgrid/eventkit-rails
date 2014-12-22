@@ -1,0 +1,71 @@
+
+{{#if loggedInAs.canEdit}}
+	{{#if model}}
+		<h3>Settings for "{{model.username}}"</h3>
+		<form role="form" {{action 'save' on='submit'}}>
+			<div class="checkbox">
+		    	<label>
+					{{input type="checkbox" checked=model.canView}} View Access
+				</label>
+				<p><small>Allows the user to view the EventKit UI website.</small></p>
+			</div>
+			<div class="checkbox">
+		    	<label>
+					{{input type="checkbox" checked=model.canDownload}} Download Access
+				</label>
+				<p><small>Allows the user to download search results to a CSV.</small></p>
+			</div>
+			<div class="checkbox">
+		    	<label>
+					{{input type="checkbox" checked=model.canPost}} HTTP POST Access
+				</label>
+				<p><small>Allows credentials to be used to POST new data to your endpoint (mainly used for SendGrid's Event Notification settings).</small></p>
+			</div>
+			{{#unless viewingLoggedInUser}}
+				<div class="checkbox">
+			    	<label>
+						{{input type="checkbox" checked=model.canEdit}} Edit Access
+					</label>
+					<p><small>Allows editing settings, users, and creating new users.</small></p>
+				</div>
+			{{/unless}}
+
+			<hr>
+
+			<div class="form-group">
+				<label>Edit Username</label>
+				{{input class="form-control" value=model.username}}
+			</div>
+			<div class="form-group">
+				<label>New Password <small>(Leave blank to keep the same)</small></label>
+				{{input class="form-control" type="password" value=model.update.password}}
+			</div>
+			<div class="form-group">
+				<label>Confirm New Password <small>(Leave blank to keep the same)</small></label>
+				{{input class="form-control" type="password" value=model.update.confirmPassword}}
+			</div>
+
+
+			<div class="row">
+				<div class="col-md-4">
+					<button {{action 'save'}} class="btn-block btn btn-success" style="margin-bottom: 10px;">Update User</button>	
+				</div>
+
+				<div class="col-md-4">
+					<button {{action 'cancel'}} class="btn-block btn btn-default" style="margin-bottom: 10px;">Cancel</button>	
+				</div>
+
+				<div class="col-md-4">
+					<button class="btn-block btn btn-danger" {{action 'deleteUser'}} style="margin-bottom: 10px;">Delete User</button>
+				</div>
+			</div>
+
+		</form>
+	{{else}}
+		<h1>Uh oh!</h1>
+		<p>There was a problem loading the user. Please try refreshing the page.</p>
+	{{/if}}
+{{else}}
+	<h1>Uh oh!</h1>
+	<p>You do not have permission to edit users</p>
+{{/if}}
