@@ -31,7 +31,13 @@ EventKit.Event = DS.Model.extend({
 	# COMPUTED PROPERTIES
 	#=========================================================================#
 	rawCodeBlock: (->
-		return new Handlebars.SafeString("<pre><code>" + @get("raw") + "</code></pre>")
+		raw = ""
+
+		if @get('raw')
+			rawObject = JSON.parse @get('raw')
+			raw = JSON.stringify rawObject, null, 2
+
+		return new Handlebars.SafeString("<pre><code>" + raw + "</code></pre>")
 	).property('raw')
 
 	hasAdditionalArguments: (->
