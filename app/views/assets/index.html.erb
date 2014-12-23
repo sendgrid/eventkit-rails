@@ -58,12 +58,21 @@
   <script>
     window.token = $.cookie('auth_token') || ''
 
+    function isiPhone(){
+      return (
+        //Detect iPhone
+        (navigator.platform.indexOf("iPhone") != -1) ||
+        //Detect iPod
+        (navigator.platform.indexOf("iPod") != -1)
+      );
+    }
+
     $(function() {
       if (window.navigator.standalone) {
         var detectOrientation = function(event) {
           if(window.orientation == 0) {
             $('body').addClass('standalone')
-          } else {
+          } else if (isiPhone()) {
             $('body').removeClass('standalone')
           }
         }
