@@ -76,13 +76,17 @@ EventKit.Event = DS.Model.extend({
 					bounce: "This email was dropped because \"__EMAIL__\" is on your bounce list.  To continue sending to this address, go to <a href=\"http://sendgrid.com/bounces\">http://sendgrid.com/bounces</a> and delete it from the list.",
 					unsubscribe: "This email was dropped because \"__EMAIL__\" is on your unsubscribe list.  To continue sending to this address, go to <a href=\"http://sendgrid.com/unsubscribes\">http://sendgrid.com/unsubscribes</a> and delete it from the list.",
 					invalid: "This email was dropped because \"__EMAIL__\" is an invalid email address.  See your invalid email list at <a href=\"http://sendgrid.com/invalidEmail\">http://sendgrid.com/invalidEmail</a> for more info.",
-					spam: "This email was dropped because \"__EMAIL__\" reported one of your previous messages as spam, and got added to your spam report list.  To continue sending to this address, go to <a href=\"http://sendgrid.com/spamReports\">http://sendgrid.com/spamReports</a> and delete it from the list."
+					spam: "This email was dropped because \"__EMAIL__\" reported one of your previous messages as spam, and got added to your spam report list.  To continue sending to this address, go to <a href=\"http://sendgrid.com/spamReports\">http://sendgrid.com/spamReports</a> and delete it from the list.",
+					quota: "This email was dropped because the amount of recipients specified in the message exceeded the number of credits remaining on your account at the time of the send. See the <a href=\"https://sendgrid.com/docs/User_Guide/sending_practices.html\" target=\"_blank\">Sending Practices and Limitations</a> section of SendGrid's docs for more info."
 				}
 
-				for type, message of descriptions
-					regex = new RegExp(type, "gi");
-					if @get('reason').match(regex)
-						reason = descriptions[type].replace('__EMAIL__', @get('email'));
+				if @get('reason').match(/smtpapi/gi)
+					reason = "This email was dropped because the message contained an invalid X-SMTPAPI header.  An email was sent to the \"From\" address on the message with more details.  You can also use SendGrid's <a href=\"https://sendgrid.com/docs/Utilities/smtpapi_validator.html\" target=\"_blank\">SMTPAPI Header Validator</a> to help troubleshoot."
+				else
+					for type, message of descriptions
+						regex = new RegExp(type, "gi");
+						if @get('reason').match(regex)
+							reason = descriptions[type].replace('__EMAIL__', @get('email'));
 		
 		if reason then new Handlebars.SafeString(reason) else reason
 	).property('event')
