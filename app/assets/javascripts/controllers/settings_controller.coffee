@@ -22,7 +22,7 @@ EventKit.SettingsController = Em.Controller.extend({
 		@store.find('user').then(
 			(users)->
 				self.set('loadedUsers', true)
-				if users then self.set('users', users)
+				if users then self.set('users', users.sortBy('username'))
 				users
 			(response)->
 				self.set('loadedUsers', true)
