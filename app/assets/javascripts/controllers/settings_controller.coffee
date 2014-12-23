@@ -148,7 +148,7 @@ EventKit.SettingsController = Em.Controller.extend({
 						self.set('showAddUser', false)
 						self.set('model', new Date())
 					(error, user)->
-						if error.status == 406
+						if error.status == 409
 							alert "Could not save new user because that username already exists!"
 						else 
 							alert "Yikes! Something went wrong, please try again."

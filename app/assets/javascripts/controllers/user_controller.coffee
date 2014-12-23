@@ -29,8 +29,13 @@ EventKit.UserController = Em.Controller.extend {
 					(user)->
 						user.get('update').reset()
 						alert "User updates saved!"
-					()->
-						alert 'Uh oh! Something went wrong. Please try again.'
+						self.transitionToRoute 'settings'
+					(error, user)->
+						if error.status == 409
+							alert "Could not save new user because that username already exists!"
+							self.get('model').rollback()
+						else
+							alert 'Uh oh! Something went wrong. Please try again.'
 				)
 			else
 				alert "The passwords don't match!"
