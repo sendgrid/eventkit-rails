@@ -10,6 +10,10 @@ EventKit.HttpBasicAuth = Em.Object.extend({
 	password: ""
 	confirmPassword: ""
 
+	isHttps: (->
+		if window.location.protocol.match(/https/gi) then true else false
+	).property()
+
 	passwordMatches: (->
 		if !@get('password').length and !@get('confirmPassword').length
 			return true

@@ -45,6 +45,11 @@
 				{{input class="form-control" type="password" value=model.update.confirmPassword}}
 			</div>
 
+			{{#unless model.update.isHttps}}
+				<div class="alert alert-danger" role="alert">
+					<strong>WARNING!</strong> You are currently on an unsecured connection.  Changing your password will send that information unencrypted to your server, which can be intercepted by nefarious individuals.
+				</div>
+			{{/unless}}
 
 			<div class="row">
 				<div class="col-md-4">
