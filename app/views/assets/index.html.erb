@@ -56,15 +56,21 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
   <script>
-    <% if @user %>
-      window.token = "<%= @user.token %>";
-    <% else %>
-      window.token = '';
-    <% end %>
+    window.token = $.cookie('auth_token') || ''
 
     $(function() {
       if (window.navigator.standalone) {
-        $('body').addClass('standalone')
+        var detectOrientation = function(event) {
+          if(window.orientation == 0) {
+            $('body').addClass('standalone')
+          } else {
+            $('body').removeClass('standalone')
+          }
+        }
+
+        detectOrientation()
+        
+        $(window).on("orientationchange", detectOrientation);
       }
     });
   </script>

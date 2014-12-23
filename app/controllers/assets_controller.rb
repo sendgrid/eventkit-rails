@@ -15,6 +15,16 @@ class AssetsController < ApplicationController
 
 	def authenticate
 		if User.count > 0 then
+
+			if cookies['auth_token'] and User.where(token: cookies['auth_token'])
+				found_user = User.where(token: cookies['auth_token']).first
+				unless found_user.is_token_expired
+					found_user.renew_expiration
+					@user = found_user
+					return
+				end
+			end
+
 			authenticate_or_request_with_http_basic('Authorized users only') do |u, p|
 				valid = false
 
@@ -35,5 +45,6 @@ class AssetsController < ApplicationController
 
 	def index
 		@version = VERSION
+		cookies['auth_token'] = { :value => @user.token, :expires => Time.at(@user.token_expires) } unless @user.nil?
 	end
 end
