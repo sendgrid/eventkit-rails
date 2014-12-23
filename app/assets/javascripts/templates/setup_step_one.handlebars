@@ -1,3 +1,9 @@
+{{#unless isHttps}}
+	<div class="alert alert-danger" role="alert">
+		<strong>WARNING!</strong> You are currently on an unsecured connection.  Continuing will send your credentials unencrypted to your server, which can be intercepted by nefarious individuals.
+	</div>
+{{/unless}}
+
 <h4>Step 1 of {{controllers.setup.totalSteps}}</h4>
 
 <p>
@@ -32,12 +38,6 @@
 
 		{{#unless passwordMatches}}
 			<p style="color:#800 !important;">Your password entries don't match</p>
-		{{/unless}}
-
-		{{#unless isHttps}}
-			<div class="alert alert-danger" role="alert">
-				<strong>WARNING!</strong> You are currently on an unsecured connection.  Continuing will send your credentials unencrypted to your server, which can be intercepted by nefarious individuals.
-			</div>
 		{{/unless}}
 
 		<div class="form-group">
