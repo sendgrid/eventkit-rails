@@ -1,75 +1,37 @@
-.content {
-	.event-details {
-		$panel-top: 130px;
-		$panel-height: 440px;
+.related-events {
+	span.list-group-item {
+		cursor: pointer;
+	}
 
-		height: $panel-top + ($panel-height * 2);
+	span.list-group-item:hover {
+		background: #EFEFEF;
+		cursor: pointer;
+	}
 
-		.event-info {
-			width: ($content-width / 2) - ($dashboard-panel-padding / 2);
-			height: $panel-height;
-			overflow: hidden;
-			@include position(absolute, $panel-top null null 0px);
+	span.active {
+		background: #EEEEEE !important;
+		border-color: #DDDDDD !important;
+		color: black;
+		cursor: auto !important;
 
-			.panel-body {
-				@include position(absolute, 42px 0px 0px 0px);
-				overflow: auto;
-			}
-		}
-
-		.raw-json {
-			width: $content-width;
-			margin-bottom: 100px;
-			@include position(absolute, ($panel-top + $dashboard-panel-padding + $panel-height) 0px null null);
-
-			.list-group {
-				padding: $dashboard-panel-padding;
-			}
-		}
-
-		.related-events {
-			width: ($content-width / 2) - ($dashboard-panel-padding / 2);
-			height: $panel-height;
-			overflow: hidden;
-			@include position(absolute, $panel-top 0px null null);
-
-			.list-group {
-				@include position(absolute, 110px 0px 0px 0px);
-				overflow-y: auto;
-				border-top: 1px solid #DDDDDD;
-			}
-
-			span.list-group-item {
-				cursor: pointer;
-			}
-
-			span.list-group-item:hover {
-				background: #EFEFEF;
-				cursor: pointer;
-			}
-
-			span.active {
-				background: #FFFFFF !important;
-				border-color: #DDDDDD;
-				color: black;
-				cursor: auto !important;
-
-				small {
-					display: block !important;
-					float: right;
-				}
-			}
-
-			h3 {
-				font-size: 18px;
-				margin: 0px;
-			}
-
-			p {
-				font-size: 10px; 
-				margin: 0px; 
-				color: #AAA;
-			}
+		small {
+			display: block !important;
+			float: right;
 		}
 	}
+
+	h3 {
+		font-size: 18px;
+		margin: 0px;
+	}
+
+	p {
+		font-size: 10px; 
+		margin: 0px; 
+		color: #AAA;
+	}
+}
+
+#event-info-body {
+	overflow-y: auto;
 }

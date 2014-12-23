@@ -5,51 +5,51 @@
                 <h1 style="margin:0px;">Search Results</h1>
                 <p>Page {{page}} of {{totalPages}}</p>
                 <p>Go to the {{#link-to 'detailedSearch'}}Detailed Search{{/link-to}} to modify your search.</p>
-                <p><a {{bind-attr href=csv}} target="_blank">Download as CSV</a></p>
+                {{#if results.length}}
+                    <p><a {{bind-attr href=csv}} target="_blank">Download as CSV</a></p>
+                {{/if}}
             </div>
             <div class="list-group">
                 {{#if results.length}}
                     {{#each results}}
                         {{#link-to 'event' this classNames="list-group-item"}}
-                            <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; table-layout:fixed;">
-                                <tr>
-                                    <td style="width: 50%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; vertical-align: top;">
-                                        <h3 style="font-size: 18px; margin: 0px;">
-                                            {{event-title event=event}}
-                                        </h3>
-                                        {{#if timestamp}}
-                                            <p style="font-size: 10px; margin: 0px; color: #AAA;">{{format-date timestamp}}</p>
-                                        {{/if}}
-                                        {{#if subject}}
-                                            <i><p class="truncate" style="font-size: 14px; margin-top: 5px; margin-bottom: 0px; font-weight: bold;">{{subject}}</p></i>
-                                        {{/if}}
-                                        {{#if email}}
-                                            <p class="truncate" style="font-size: 14px; margin: 0px;">{{email}}</p>
-                                        {{/if}}
-                                        {{#if url}}
-                                            <p class="truncate" style="font-size: 14px; margin-top: 5px; margin-bottom: 0px;">{{url}}</p>
-                                        {{/if}}
-                                    </td>
-                                    <td style="width: 50%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; vertical-align: top;">
-                                        {{#if category}}
-                                            <p style="margin: 0px; font-weight: bold">Categories:</p>
-                                            <ul>
-                                                {{#each categoryList}}
-                                                    <li>{{this}}</li>
-                                                {{/each}}
-                                            </ul>
-                                        {{/if}}
-                                        {{#if hasAdditionalArguments}}
-                                            <p style="margin: 0px; font-weight: bold;">Additional Arguments</p>
-                                            <ul>
-                                                {{#each additionalArgumentList}}
-                                                    <li><strong>{{key}}:</strong> {{value}}</li>
-                                                {{/each}}
-                                            </ul>
-                                        {{/if}}
-                                    </td>
-                                </tr>
-                            </table>
+                            <div class="container-fluid">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <h3 style="font-size: 18px; margin: 0px;">
+                                        {{event-title event=event}}
+                                    </h3>
+                                    {{#if timestamp}}
+                                        <p style="font-size: 10px; margin: 0px; color: #AAA;">{{format-date timestamp}}</p>
+                                    {{/if}}
+                                    {{#if subject}}
+                                        <i><p class="truncate" style="font-size: 14px; margin-top: 5px; margin-bottom: 0px; font-weight: bold;">{{subject}}</p></i>
+                                    {{/if}}
+                                    {{#if email}}
+                                        <p class="truncate" style="font-size: 14px; margin: 0px;">{{email}}</p>
+                                    {{/if}}
+                                    {{#if url}}
+                                        <p class="truncate" style="font-size: 14px; margin-top: 5px; margin-bottom: 0px;">{{url}}</p>
+                                    {{/if}}
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 hidden-xs visible-sm visible-md visible-lg">
+                                    {{#if category}}
+                                        <p style="margin: 0px; font-weight: bold">Categories:</p>
+                                        <ul>
+                                            {{#each categoryList}}
+                                                <li>{{this}}</li>
+                                            {{/each}}
+                                        </ul>
+                                    {{/if}}
+                                    {{#if hasAdditionalArguments}}
+                                        <p style="margin: 0px; font-weight: bold;">Additional Arguments</p>
+                                        <ul>
+                                            {{#each additionalArgumentList}}
+                                                <li><strong>{{key}}:</strong> {{value}}</li>
+                                            {{/each}}
+                                        </ul>
+                                    {{/if}}
+                                </div>
+                            </div>
                         {{/link-to}}
                     {{/each}}
                 {{else}}

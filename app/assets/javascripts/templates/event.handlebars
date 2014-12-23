@@ -1,168 +1,167 @@
-{{#with model}}
-<div class="event-details">
-    <span class="outer-text">
-        <h1>Event Details</h1>
-        {{#if event}}
-            <h2 style="font-size: 22px; margin-bottom: 0px;">{{event-title event=event}}</h2>
-        {{/if}}
-        {{#if email}}
-            <p style="font-size: 18px; margin: 0px; font-weight: bold;">{{email}}</p>
-        {{/if}}
-    </span>
-    <div class="panel panel-info event-info" style="margin-top: 25px;">
-        <div class="panel-heading">
-            Event Information
-        </div>
-        <div class="panel-body" id="event-info-body">
-            {{#if timestamp}}
-                <p><b>Time:</b></p>
-                <ul><li>{{format-date timestamp}}</li></ul>
-            {{/if}}
+<h1>Event Details</h1>
+{{#if event}}
+    <h2 style="font-size: 22px; margin-bottom: 0px;">{{event-title event=event}}</h2>
+{{/if}}
+{{#if email}}
+    <p style="font-size: 18px; margin: 0px; font-weight: bold;">{{email}}</p>
+{{/if}}
 
-            {{#if event_post_timestamp}}
-                <p><b>Event Posted At:</b></p>
-                <ul><li>{{format-date event_post_timestamp}}</li></ul>
-            {{/if}}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Raw JSON
+    </div>
+    <div class="panel-body">
+        <p>Below is the raw JSON POST sent from SendGrid's Event Notification app.</p>
+        {{model.rawCodeBlock}}
+    </div>
+</div>
 
-            {{#if subject}}
-                <p><b>Subject:</b></p>
-                <ul><li>{{subject}}</li></ul>
-            {{/if}}
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Event Information
+            </div>
+            <div class="panel-body" id="event-info-body">
+                {{#with model}}
+                    {{#if timestamp}}
+                        <p><b>Time:</b></p>
+                        <ul><li>{{format-date timestamp}}</li></ul>
+                    {{/if}}
 
-            {{#if smtp-id}}
-                <p><b>SMTP-ID:</b></p>
-                <ul><li><span id='current_smtpid'>{{smtp-id}}</span></li></ul>
-            {{/if}}
+                    {{#if event_post_timestamp}}
+                        <p><b>Event Posted At:</b></p>
+                        <ul><li>{{format-date event_post_timestamp}}</li></ul>
+                    {{/if}}
 
-            {{#if sg_event_id}}
-                <p><b>SendGrid Event ID:</b></p>
-                <ul><li>{{sg_event_id}}</li></ul>
-            {{/if}}
+                    {{#if subject}}
+                        <p><b>Subject:</b></p>
+                        <ul><li>{{subject}}</li></ul>
+                    {{/if}}
 
-            {{#if categoryList}}
-                <p><b>Categories:</b></p>
-                <ul>
-                    {{#each categoryList}}
-                        <li>{{this}}</li>
-                    {{/each}}
-                </ul>
-            {{/if}}
+                    {{#if smtp-id}}
+                        <p><b>SMTP-ID:</b></p>
+                        <ul><li><span id='current_smtpid'>{{smtp-id}}</span></li></ul>
+                    {{/if}}
 
-            {{#if newsletter}}
-                <p><b>Newsletter Info:</b></p>
-                <ul>
-                    <li>Newsletter ID: {{newsletterList.newsletter_id}}</li>
-                    <li>User List ID: {{newsletterList.newsletter_user_list_id}}</li>
-                    <li>Send ID: {{newsletterList.newsletter_send_id}}</li>
-                </ul>
-            {{/if}}
+                    {{#if sg_event_id}}
+                        <p><b>SendGrid Event ID:</b></p>
+                        <ul><li>{{sg_event_id}}</li></ul>
+                    {{/if}}
 
-            {{#if reason}}
-                <p><b>Reason:</b></p>
-                <ul><li>{{reason}}</li></ul>
-            {{/if}}
+                    {{#if categoryList}}
+                        <p><b>Categories:</b></p>
+                        <ul>
+                            {{#each categoryList}}
+                                <li>{{this}}</li>
+                            {{/each}}
+                        </ul>
+                    {{/if}}
 
-            {{#if response}}
-                <p><b>Response:</b></p>
-                <ul><li>{{response}}</li></ul>
-            {{/if}}
+                    {{#if newsletter}}
+                        <p><b>Newsletter Info:</b></p>
+                        <ul>
+                            <li>Newsletter ID: {{newsletterList.newsletter_id}}</li>
+                            <li>User List ID: {{newsletterList.newsletter_user_list_id}}</li>
+                            <li>Send ID: {{newsletterList.newsletter_send_id}}</li>
+                        </ul>
+                    {{/if}}
 
-            {{#if url}}
-                <p><b>URL:</b></p>
-                <ul>
-                    <li>
-                        <a {{bind-attr href=url}} target="_blank">
-                            {{url}}
-                        </a>
-                    </li>
-                </ul>
-            {{/if}}
+                    {{#if reason}}
+                        <p><b>Reason:</b></p>
+                        <ul><li>{{reason}}</li></ul>
+                    {{/if}}
 
-            {{#if ip}}
-                <p><b>IP:</b></p>
-                <ul><li>{{ip}}</li></ul>
-            {{/if}}
+                    {{#if response}}
+                        <p><b>Response:</b></p>
+                        <ul><li>{{response}}</li></ul>
+                    {{/if}}
 
-            {{#if useragent}}
-                <p><b>User Agent:</b></p>
-                <ul><li>{{useragent}}</li></ul>
-            {{/if}}
+                    {{#if url}}
+                        <p><b>URL:</b></p>
+                        <ul>
+                            <li>
+                                <a {{bind-attr href=url}} target="_blank">
+                                    {{url}}
+                                </a>
+                            </li>
+                        </ul>
+                    {{/if}}
 
-            {{#if attempt}}
-                <p><b>Attempt:</b> {{attempt}}</p>
-            {{/if}}
+                    {{#if ip}}
+                        <p><b>IP:</b></p>
+                        <ul><li>{{ip}}</li></ul>
+                    {{/if}}
 
-            {{#if status}}
-                <p><b>Status:</b></p>
-                <ul><li>{{status}}</li></ul>
-            {{/if}}
+                    {{#if useragent}}
+                        <p><b>User Agent:</b></p>
+                        <ul><li>{{useragent}}</li></ul>
+                    {{/if}}
 
-            {{#if type}}
-                <p><b>Type:</b></p>
-                <ul><li class="truncate">{{type}}</li></ul>
-            {{/if}}
+                    {{#if attempt}}
+                        <p><b>Attempt:</b> {{attempt}}</p>
+                    {{/if}}
 
-            {{#if sg_message_id}}
-                <p><b>SendGrid Message ID:</b></p>
-                <ul><li class="truncate">{{sg_message_id}}</li></ul>
-            {{/if}}
+                    {{#if status}}
+                        <p><b>Status:</b></p>
+                        <ul><li>{{status}}</li></ul>
+                    {{/if}}
 
-            {{#if asm_group_id}}
-                <p><b>ASM Group ID:</b></p>
-                <ul><li class="truncate">{{asm_group_id}}</li></ul>
-            {{/if}}
+                    {{#if type}}
+                        <p><b>Type:</b></p>
+                        <ul><li class="truncate">{{type}}</li></ul>
+                    {{/if}}
 
-            {{#if hasAdditionalArguments}}
-                <p><b>Additional Arguments</b></p>
-                <ul>
-                    {{#each additionalArgumentList}}
-                        <li><strong>{{key}}:</strong> {{value}}</li>
-                    {{/each}}
-                </ul>
-            {{/if}}
+                    {{#if sg_message_id}}
+                        <p><b>SendGrid Message ID:</b></p>
+                        <ul><li class="truncate">{{sg_message_id}}</li></ul>
+                    {{/if}}
 
-            {{#if dropExplanation}}
-                {{dropExplanation}}
-            {{/if}}
+                    {{#if asm_group_id}}
+                        <p><b>ASM Group ID:</b></p>
+                        <ul><li class="truncate">{{asm_group_id}}</li></ul>
+                    {{/if}}
+
+                    {{#if hasAdditionalArguments}}
+                        <p><b>Additional Arguments</b></p>
+                        <ul>
+                            {{#each additionalArgumentList}}
+                                <li><strong>{{key}}:</strong> {{value}}</li>
+                            {{/each}}
+                        </ul>
+                    {{/if}}
+
+                    {{#if dropExplanation}}
+                        {{dropExplanation}}
+                    {{/if}}
+                {{/with}}
+            </div>
         </div>
     </div>
-{{/with}}
-
-
-    <div class="panel panel-info related-events" style="margin-top: 25px;">
-        <div class="panel-heading">
-            Related Events
-        </div>
-        <div class="panel-body">
-            Related events are determined by the sg_message_id field of the message.
-        </div>
-        <div class="list-group" style="overflow-y: auto;" id="related-group">
-            {{#if related.length}}
-                {{#each event in related}}
-                    {{#link-to 'event' event tagName="span" class="list-group-item"}}
-                        <h3>{{event-title event=event.event}}&nbsp;<small style="display:none;">Currently Selected</small></h3>
-                        <p>{{format-date event.timestamp}}</p>
-                    {{/link-to}}
-                {{/each}}
-            {{else}}
-                <span class="list-group-item">
-                    <h3 style="font-size: 18px; margin-top: 1em; margin-bottom: 1em;">
-                        No related events found.
-                    </h3>
-                </span>
-            {{/if}}
-        </div>
-    </div>
-
-    <div class="panel panel-info raw-json" style="margin-top: 25px;">
-        <div class="panel-heading">
-            Raw JSON
-        </div>
-        <div class="panel-body">
-            Below is the raw JSON POST sent from SendGrid's Event Notification app.
-        </div>
-        <div class="list-group">
-            {{model.rawCodeBlock}}
+    <div class="col-md-6">
+        <div class="panel panel-default related-events">
+            <div class="panel-heading">
+                Related Events
+            </div>
+            <div class="panel-body">
+                Related events are determined by the sg_message_id field of the message.
+            </div>
+            <div class="list-group" id="related-group">
+                {{#if related.length}}
+                    {{#each event in related}}
+                        {{#link-to 'event' event tagName="span" class="list-group-item"}}
+                            <h3>{{event-title event=event.event}}&nbsp;<small style="display:none;">Currently Selected</small></h3>
+                            <p>{{format-date event.timestamp}}</p>
+                        {{/link-to}}
+                    {{/each}}
+                {{else}}
+                    <span class="list-group-item">
+                        <h3 style="font-size: 18px; margin-top: 1em; margin-bottom: 1em;">
+                            No related events found.
+                        </h3>
+                    </span>
+                {{/if}}
+            </div>
         </div>
     </div>
 </div>

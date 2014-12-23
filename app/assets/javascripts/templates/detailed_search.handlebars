@@ -2,28 +2,38 @@
     <div class="panel-body">
         <h1 style="margin:0px;">Detailed Search</h1>
         <p style="margin-top: 0px;">Add filters below to narrow down your search:</p>
-        <form id="detailedSearchParams" class="form-inline" role="form" style="margin-bottom: 15px" {{action "submitSearch" on="submit"}}>
-            {{#each this}}
-                <div class="form-group filter-row">
-                    <label class="col-sm-2 control-label" style="width: 170px; text-align: right; margin-top: 8px;">{{name}}</label>
-                    {{#if additional_arguments}}
-                        {{input value=key class="form-control form-argument-field" placeholder="Argument Key" type="text"}}
-                        {{input value=val class="form-control form-argument-field" placeholder="Argument Value" type="text"}}
-                    {{else}}
-                        {{#if event}}
-                            {{view "Ember.Select" content=events
-                                                  optionLabelPath="content.name"
-                                                  optionValuePath="content.type"
-                                                  class="form-control form-field"
-                                                  selection=selectedEvent
-                            }}
+        <form class="form-horizontal" role="form" {{action "submitSearch" on="submit"}}>
+                {{#each this}}
+                    <div class="form-group">                
+                        <label class="col-md-2 control-label">{{name}}</label>
+                        {{#if additional_arguments}}
+                            <div class="col-md-4">
+                                {{input value=key class="form-control param-field" placeholder="Argument Key" type="text"}}
+                            </div>
+                            <div class="col-md-4">
+                                {{input value=val class="form-control param-field" placeholder="Argument Value" type="text"}}
+                            </div>
                         {{else}}
-                            {{input value=val class="form-control form-field" placeholder=name type="text" name=id}}
+                            <div class="col-md-8">
+                                {{#if event}}
+                                    {{view "Ember.Select" content=events
+                                                          optionLabelPath="content.name"
+                                                          optionValuePath="content.type"
+                                                          class="form-control param-field"
+                                                          selection=selectedEvent
+                                    }}
+                                {{else}}
+                                    {{input value=val class="form-control param-field" placeholder=name type="text" name=id}}
+                                {{/if}}
+                            </div>
                         {{/if}}
-                    {{/if}}
-                    <button type="button" class="btn btn-danger" {{action "removeFilter" this}}>Remove Filter</button>                        
-                </div>
-            {{/each}}
+                            
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-danger" {{action "removeFilter" this}}>Remove Filter</button>
+                        </div>
+                    </div>
+                    <hr class="visible-xs visible-sm hidden-md hidden-lg col-md-12" />
+                {{/each}}
         </form>
         
         <div class="btn-group">

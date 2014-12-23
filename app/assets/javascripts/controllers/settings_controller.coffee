@@ -22,7 +22,7 @@ EventKit.SettingsController = Em.Controller.extend({
 		@store.find('user').then(
 			(users)->
 				self.set('loadedUsers', true)
-				if users then self.set('users', users)
+				if users then self.set('users', users.sortBy('username'))
 				users
 			(response)->
 				self.set('loadedUsers', true)
@@ -33,7 +33,7 @@ EventKit.SettingsController = Em.Controller.extend({
 		protocol = window.location.protocol + "//"
 		hash = window.location.hash
 		url = window.location.href.replace(protocol, "").replace(hash, "")
-		protocol + "[username]:[password]@" + url
+		return new Handlebars.SafeString "<pre><code>" + protocol + "[username]:[password]@" + url + "</code></pre>"
 	).property()
 
 
@@ -110,14 +110,6 @@ EventKit.SettingsController = Em.Controller.extend({
 
 	users: null
 	loadedUsers: false
-	editAccessDisabled: (->
-		if !@get('users') then return true
-		i = 0
-		@get('users').forEach((user)->
-			if user.get('canEdit') and user.get('canView') then i++
-		)
-		if i > 0 then false else true
-	).property('users.@each.permissions')
 
 	showAddUser: false
 	newUser: EventKit.HttpBasicAuth.create()
@@ -138,10 +130,6 @@ EventKit.SettingsController = Em.Controller.extend({
 				)
 			)
 
-			@get('users').forEach((user)->
-				if user.get('isDirty') then user.save()
-			)
-
 		toggleAddUser: ()->
 			@get('newUser').reset()
 			@set('showAddUser', !@get('showAddUser'))
@@ -160,7 +148,7 @@ EventKit.SettingsController = Em.Controller.extend({
 						self.set('showAddUser', false)
 						self.set('model', new Date())
 					(error, user)->
-						if error.status == 406
+						if error.status == 409
 							alert "Could not save new user because that username already exists!"
 						else 
 							alert "Yikes! Something went wrong, please try again."
@@ -168,30 +156,7 @@ EventKit.SettingsController = Em.Controller.extend({
 				)
 
 		editUser: (user)->
-			user.get('update').reset()
-			user.set('editing', !user.get('editing'))
-
-		updateUser: (user)->
-			self = @
-			if user.get('update.passwordMatches')
-				if user.get('update.password').length and user.get('update.confirmPassword').length
-					user.set('password', user.get('update.password'))
-
-				user.save().then((user)->
-					self.set('model', new Date())
-					user.get('update').reset()
-					user.set('editing', false)
-					alert "User updates saved!"
-				)
-			else
-				alert "The passwords don't match!"
-
-		deleteUser: (user)->
-			if confirm "Are you sure you want to delete the user \"" + user.get('username') + "\"?"
-				self = @
-				user.destroyRecord().then(()->
-					self.set('model', new Date())
-				)
+			@transitionToRoute 'user', user
 
 	}
 

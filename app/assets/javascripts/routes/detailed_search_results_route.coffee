@@ -5,7 +5,7 @@
 # the result as the model to the Detailed Search Results Controller.
 #
 
-EventKit.DetailedSearchResultsRoute = Em.Route.extend({
+EventKit.DetailedSearchResultsRoute = Em.Route.extend EventKit.ResetScroll, {
 
 	queryParams: {
 		p: {
@@ -75,4 +75,4 @@ EventKit.DetailedSearchResultsRoute = Em.Route.extend({
 		@fetch(params.s, params.p)
 
 
-})
+}

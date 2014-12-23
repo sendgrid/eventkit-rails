@@ -5,7 +5,7 @@
 # the model for the Search Results Controller.
 #
 
-EventKit.SearchResultsRoute = Em.Route.extend({
+EventKit.SearchResultsRoute = Em.Route.extend EventKit.ResetScroll, {
 
 	fetch: (query, page)->
 		limit = 10
@@ -77,4 +77,4 @@ EventKit.SearchResultsRoute = Em.Route.extend({
 				controller.set('model', data)
 			)
 
-})
+}

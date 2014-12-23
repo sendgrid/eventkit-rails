@@ -9,9 +9,8 @@ class ApplicationController < ActionController::Base
 			token = params[:token]
 		end
 		permitted = true
-		if User.where(token: token).present? or token == "12345" then
+		if User.where(token: token).present? then
 			user = User.where(token: token).first
-			# puts "Checking if User #{user.username} has permission level #{permission_level_needed} (#{user.permissions})"
 			permitted = (user.permissions & permission_level_needed) == permission_level_needed
 		else
 			permitted = false

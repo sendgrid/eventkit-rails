@@ -5,10 +5,10 @@
 # it redirects to the first step.
 #
 
-EventKit.SetupStepTwoRoute = Em.Route.extend({
+EventKit.SetupStepTwoRoute = Em.Route.extend EventKit.ResetScroll, {
 
 	setupController: (controller, model)->
 		if !controller.get('controllers.setup.model.meetsCriteria')
 			@transitionTo('setupStepOne')
 
-})
+}

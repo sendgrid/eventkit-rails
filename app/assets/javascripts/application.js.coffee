@@ -1,4 +1,5 @@
 #= require jquery
+#= require cookies
 #= require handlebars
 #= require ember
 #= require ember-data

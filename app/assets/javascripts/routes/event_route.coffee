@@ -5,7 +5,7 @@
 # controller.
 #
 
-EventKit.EventRoute = Em.Route.extend({
+EventKit.EventRoute = Em.Route.extend EventKit.ResetScroll, {
 	
 	model: (params)->
 		id = params.id
@@ -20,4 +20,4 @@ EventKit.EventRoute = Em.Route.extend({
 					alert 'Uh oh! Something went wrong. Please try again.'
 		)
 
-})
+}

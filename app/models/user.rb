@@ -9,9 +9,21 @@ class User < ActiveRecord::Base
 				break token unless (User.exists?(token: token))
 			end
 			self.token = token
-			self.token_expires = now + (24 * 60 * 60)
+			self.renew_expiration
 		end
 		self.save
+	end
+
+	def renew_expiration
+		days = 7
+		now = Time.now.to_i
+		self.token_expires = now + (days * 24 * 60 * 60)
+		self.save
+	end
+
+	def is_token_expired
+		now = Time.now.to_i
+		return now > self.token_expires
 	end
 
 end

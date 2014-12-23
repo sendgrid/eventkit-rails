@@ -4,7 +4,7 @@
 # Provides the model for the home dashboard.
 #
 
-EventKit.HomeRoute = Em.Route.extend({
+EventKit.HomeRoute = Em.Route.extend EventKit.ResetScroll, {
 	model: ()->
 		now = new Date()
 		yesterday = Math.floor(now.getTime() / 1000) - (24 * 60 * 60)
@@ -20,4 +20,4 @@ EventKit.HomeRoute = Em.Route.extend({
 				since: yesterday
 			})
 		})
-})
+}

@@ -5,12 +5,13 @@
 # hasn't already been setup. If so, it'll redirect to the home page.
 #
 
-EventKit.SetupRoute = Em.Route.extend({
+EventKit.SetupRoute = Em.Route.extend EventKit.ResetScroll, {
 
 	model: ()->
 		EventKit.HttpBasicAuth.create()
 
 	activate: ()->
+		@_super()
 		self = @
 		@store.find('setting', {
 			name: 'is_setup'
@@ -20,4 +21,4 @@ EventKit.SetupRoute = Em.Route.extend({
 					self.transitionTo('home')
 		)
 
-})
+}

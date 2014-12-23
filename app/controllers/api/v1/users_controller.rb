@@ -84,10 +84,14 @@ class Api::V1::UsersController < ApplicationController
 			if User.count == 0
 				properties[:permissions] = Permissions::VIEW | Permissions::EDIT | Permissions::DOWNLOAD | Permissions::POST
 			end
-			record = User.create(properties)
-			record.issue_token
-			record.save
-			render json: record
+			if properties[:username]
+				self.check_for_duplicate_username(properties[:username], nil) do
+					record = User.create(properties)
+					record.issue_token
+					record.save
+					render json: record
+				end
+			end
 		end
 
 		if User.count == 0
@@ -129,7 +133,7 @@ class Api::V1::UsersController < ApplicationController
 	#
 	def update
 		self.user_has_permissions(Permissions::EDIT) do
-			id = params[:id]
+			id = params[:id].to_i
 			if User.where(id: id).present? then
 				user = User.find(id)
 
@@ -139,14 +143,36 @@ class Api::V1::UsersController < ApplicationController
 					properties[:password] = Password.create(properties[:password])
 				end
 
-				user.update(properties)
-				render json: user
+				if properties[:username]
+					self.check_for_duplicate_username(properties[:username], id) do
+						user.update(properties)
+						render json: user
+					end
+				end
 			else
 				render json: {
 					:message => :error,
 					:error => "User record with ID #{params[:id]} not found."
 				}, :status => 404
 			end
+		end
+	end
+
+	def check_for_duplicate_username(username, id, &block)
+		if User.where(username: username).present? then
+			user = User.where(username: username).first
+			if user.id == id
+				if block
+					block.call
+				end
+			else
+				render json: {
+					:message => :error,
+					:error => "A user with username \"#{username}\" already exists."
+				}, :status => 409
+			end
+		elsif block
+			block.call
 		end
 	end
 
