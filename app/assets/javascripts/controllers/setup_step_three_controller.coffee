@@ -9,4 +9,9 @@ EventKit.SetupStepThreeController = Em.Controller.extend({
 
 	needs: ['setup']
 
+	actions: {
+		goToDashboard: ()->
+			window.location.reload()
+	}
+
 })
