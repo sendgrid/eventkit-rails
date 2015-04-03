@@ -33,7 +33,7 @@ EventKit.SettingsController = Em.Controller.extend({
 		protocol = window.location.protocol + "//"
 		hash = window.location.hash
 		url = window.location.href.replace(protocol, "").replace(hash, "")
-		return new Handlebars.SafeString "<pre><code>" + protocol + "[username]:[password]@" + url + "</code></pre>"
+		return new Ember.Handlebars.SafeString "<pre><code>" + protocol + "[username]:[password]@" + url + "</code></pre>"
 	).property()
 
 

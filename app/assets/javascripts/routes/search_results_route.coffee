@@ -29,7 +29,7 @@ EventKit.SearchResultsRoute = Em.Route.extend EventKit.ResetScroll, {
 			pagesArray = [{
 				query: query
 				page: 1
-				display: new Handlebars.SafeString("&laquo;")
+				display: new Ember.Handlebars.SafeString("&laquo;")
 			}]
 
 			padding = 3
@@ -49,7 +49,7 @@ EventKit.SearchResultsRoute = Em.Route.extend EventKit.ResetScroll, {
 			pagesArray.push {
 				query: query
 				page: totalPages
-				display: new Handlebars.SafeString("&raquo;")
+				display: new Ember.Handlebars.SafeString("&raquo;")
 			}
 
 			{
