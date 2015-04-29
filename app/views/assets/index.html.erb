@@ -72,8 +72,12 @@
         var detectOrientation = function(event) {
           if(window.orientation == 0) {
             $('body').addClass('standalone')
-          } else if (isiPhone()) {
-            $('body').removeClass('standalone')
+          } else {
+            if (isiPhone()) {
+              $('body').removeClass('standalone')
+            } else {
+              $('body').addClass('standalone')
+            }
           }
         }
 

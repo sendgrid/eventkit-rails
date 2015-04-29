@@ -42,7 +42,7 @@ class Api::V1::EventsController < ApplicationController
 								value_array << "%\"#{k}\":#{v}%"
 							end
 						else
-							statement_array << "#{key} LIKE ?"
+							statement_array << "\"#{key}\" LIKE ?"
 							value_array << "%#{value}%"
 						end
 					end

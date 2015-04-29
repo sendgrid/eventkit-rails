@@ -27,8 +27,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'bcrypt', '~> 3.1.7'
 gem "active_model_serializers", '>= 0.9.0'
-gem "ember-rails", "~>0.14"
-gem "ember-source", "~>1.1"
+gem "ember-rails", "~>0.18"
 
 group :doc do
 	gem 'sdoc', require: false

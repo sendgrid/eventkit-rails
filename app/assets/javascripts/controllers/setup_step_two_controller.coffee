@@ -19,7 +19,7 @@ EventKit.SetupStepTwoController = Em.Controller.extend({
 		url = window.location.href.replace(protocol, "").replace(hash, "")
 		model = @get('controllers.setup.model')
 		fullURL = protocol + encodeURIComponent(model.get('username')) + ":" + encodeURIComponent(model.get('password')) + "@" + url
-		return new Handlebars.SafeString '<pre><code>' + fullURL + '</code></pre>'
+		return new Ember.Handlebars.SafeString '<pre><code>' + fullURL + '</code></pre>'
 	).property('controllers.setup.model.username', 'controllers.setup.model.password')
 
 	actions: {
