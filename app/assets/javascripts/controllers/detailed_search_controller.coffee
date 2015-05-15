@@ -93,7 +93,7 @@ EventKit.DetailedSearchController = Em.ArrayController.extend({
 		}
 		{
 		    name: "Newsletter User List ID"
-		    id: "newsletter_list_id"
+		    id: "newsletter_user_list_id"
 		}
 		{
 		    name: "SMTP-ID"
