@@ -1,0 +1,9 @@
+web:
+  volumes:
+    - '.:/app/user'
+  environment:
+    RAILS_ENV: "${RAILS_ENV}"
+
+shell:
+  environment:
+    RAILS_ENV: "${RAILS_ENV}"

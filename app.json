@@ -1,11 +1,18 @@
 {
-	"name": "EventKit Rails",
-	"description": "An open source project for consuming notifications from SendGrid's Event Webhook.",
-	"repository": "https://github.com/sendgrid/eventkit-rails",
-	"logo": "https://sendgrid.com/brand/sg-logo-300.png",
-	"keywords": ["sendgrid", "eventkit", "webhook"],
-	"scripts": {
-		"postdeploy": "bundle exec rake db:migrate\nbundle exec rake db:seed"
-	},
-	"addons": ["heroku-postgresql"]
+  "name": "EventKit Rails",
+  "description": "An open source project for consuming notifications from SendGrid's Event Webhook.",
+  "repository": "https://github.com/sendgrid/eventkit-rails",
+  "logo": "https://sendgrid.com/brand/sg-logo-300.png",
+  "keywords": [
+    "sendgrid",
+    "eventkit",
+    "webhook"
+  ],
+  "image": "ruby:2.1.3-slim",
+  "scripts": {
+    "postdeploy": "bundle exec rake db:migrate\nbundle exec rake db:seed"
+  },
+  "addons": [
+    "heroku-postgresql"
+  ]
 }

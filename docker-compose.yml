@@ -1,0 +1,29 @@
+web:
+  build: .
+  command: 'bash -c ''bundle exec unicorn -p $PORT -c ./config/unicorn.rb'''
+  working_dir: /app/user
+  environment:
+    PORT: 8080
+    DATABASE_URL: 'postgres://postgres:@herokuPostgresql:5432/postgres'
+  ports:
+    - '8080:8080'
+  links:
+    - herokuPostgresql
+  restart: always
+
+shell:
+  build: .
+  command: 'bundle exec rake db:migrate'
+  working_dir: /app/user
+  environment:
+    PORT: 8080
+    DATABASE_URL: 'postgres://postgres:@herokuPostgresql:5432/postgres'
+  ports:
+    - '8081:8080'
+  links:
+    - herokuPostgresql
+  volumes:
+    - '.:/app/user'
+herokuPostgresql:
+  image: postgres
+  restart: always
