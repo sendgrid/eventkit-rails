@@ -16,7 +16,7 @@ class Api::V1::EventsController < ApplicationController
 		if params[:like] then
 			if params[:raw] then
 				# WILD CARD SEARCH
-				events = Event.where(["raw LIKE ?", "%#{query[:raw]}%"])
+				events = Event.where(["raw ILIKE ?", "%#{query[:raw]}%"])
 			elsif params[:detailed] then
 				# DETAILED SEARCH
 				details = JSON.parse params[:detailed]
@@ -35,14 +35,14 @@ class Api::V1::EventsController < ApplicationController
 						elsif key == "additional_arguments"
 							hash = JSON.parse value
 							hash.each do |k, v|
-								statement_array << "additional_arguments LIKE ?"
+								statement_array << "additional_arguments ILIKE ?"
 								value_array << "%\"#{k}\":\"#{v}\"%"
 
-								statement_array << "additional_arguments LIKE ?"
+								statement_array << "additional_arguments ILIKE ?"
 								value_array << "%\"#{k}\":#{v}%"
 							end
 						else
-							statement_array << "\"#{key}\" LIKE ?"
+							statement_array << "\"#{key}\" ILIKE ?"
 							value_array << "%#{value}%"
 						end
 					end
