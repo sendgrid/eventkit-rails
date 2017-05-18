@@ -116,7 +116,7 @@ EventKit.DetailedSearchController = Em.ArrayController.extend({
 		}
 		{
 		    name: "Type"
-		    id: "type"
+		    id: "type_id"
 		}
 		{
 		    name: "URL"
