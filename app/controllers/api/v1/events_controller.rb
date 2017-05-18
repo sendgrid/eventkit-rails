@@ -201,7 +201,7 @@ class Api::V1::EventsController < ApplicationController
 
 	private
 	def event_params(params)
-		params.require(:event).permit(:timestamp, :event, :email, :"smtp-id", :sg_event_id, :sg_message_id, :category, :newsletter, :response, :reason, :ip, :useragent, :attempt, :status, :type, :url, :additional_arguments, :event_post_timestamp, :raw, :asm_group_id)
+		params.require(:event).permit(:timestamp, :event, :email, :"smtp-id", :sg_event_id, :sg_message_id, :category, :newsletter, :response, :reason, :ip, :useragent, :attempt, :status, :type_id, :url, :additional_arguments, :event_post_timestamp, :raw, :asm_group_id)
 	end
 
 end
