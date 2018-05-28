@@ -29,8 +29,8 @@ class ReceiverController < ApplicationController
 				end
 
 				valid
-			end
-		end
+			end	
+			
 		else
 			render json: {
 				:message => :error,
