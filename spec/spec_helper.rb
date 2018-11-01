@@ -1,3 +1,5 @@
+require 'simplecov'
+SimpleCov.start
 require 'rubygems'
 require 'factory_girl_rails'
 require 'rspec_api_test'

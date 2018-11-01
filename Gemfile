@@ -9,6 +9,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rspec_api_test'
   gem 'rubocop'
+  gem 'simplecov'
   gem 'sqlite3'
 end
 group :production do
