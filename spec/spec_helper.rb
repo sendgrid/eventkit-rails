@@ -4,9 +4,9 @@ require 'rspec_api_test'
 require 'rails_helper'
 require 'rspec/rails'
 
-ENV["RAILS_ENV"] ||= 'test'
-require File.expand_path("../../config/environment", __FILE__)
+ENV['RAILS_ENV'] ||= 'test'
+require File.expand_path('../config/environment', __dir__)
 
 RSpec.configure do |config|
-	config.include FactoryGirl::Syntax::Methods
+  config.include FactoryGirl::Syntax::Methods
 end
